@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar"
 import Header from './components/topMenu'
 import HomeContent from './components/HomePageContent/HomePageContent'
-import ShowClients from './components/showClients/showClients';
+import ShowClientsAndPhotographers from './components/showClients/showClientsAndPhotographers';
 
 
 
@@ -18,7 +18,7 @@ function App() {
             <Navbar />
             <Header />
             <HomeContent />
-            <ShowClients />
+            <ShowClientsAndPhotographers />
         </div>
   );
 }

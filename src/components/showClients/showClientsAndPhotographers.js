@@ -5,23 +5,37 @@ import {useState} from 'react'
 import { useEffect } from 'react';
 
 
-const ShowClients = () => {
-    var [clients, setclients] = useState(0);
+const ShowClientsAndPhotographers = () => {
+    // var [clients, setclients] = useState(0);
     // const ClientBtnClick = async (e)=>{
     //     const response = await axios.get("http://localhost:4000/clients")
     //     all_clients = response.data;
     //     console.log(all_clients)
     // }
-    var all_clients = []
+    // var all_clients = []
     const ClientBtnClick = (e)=>{
         var response = axios.get("http://localhost:4000/clients").then((response)=>{
             // clients = response.data;
-            all_clients = response.data;
+            var all_clients = response.data;
+            console.log("ALL CLIENTS IN DATABASE:");
             console.log(all_clients);
             // setclients(response.data);
             // console.log(clients);
         })
     }
+
+    const PhotographerBtnClick = (e)=>{
+        var response = axios.get("http://localhost:4000/photographers").then((response)=>{
+            // clients = response.data;
+            var all_photographers = response.data;
+            console.log("ALL PHOTOGRAPHERS IN DATABASE:");
+            console.log(all_photographers);
+            // setclients(response.data);
+            // console.log(clients);
+        })
+    }
+
+
     
         
     
@@ -39,14 +53,21 @@ const ShowClients = () => {
             // className= 'btn'
             >
             {/* {props.text} */}
-            Console Log All Clients
+            Console Log All Clients 
             </button>
-            <div>
-                Clients: {clients}
-                
-                {/* Clients: {clients.map(client => <div>{client.name}</div>)} */}
 
-            </div>
+
+            <button 
+            onClick = {PhotographerBtnClick}
+            // style = {{backgroundColor: props.color}} 
+            // className= 'btn'
+            >
+            {/* {props.text} */}
+            Console Log All Photographers
+            </button>
+
+            
+            
 
         </div>
         
@@ -55,4 +76,4 @@ const ShowClients = () => {
 
 
 
-export default ShowClients
+export default ShowClientsAndPhotographers
