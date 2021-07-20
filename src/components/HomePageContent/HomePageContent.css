@@ -1,0 +1,24 @@
+/* .header {
+  height: 100%;
+  margin: 0;
+}
+.headerBackground {
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+.tableHolder {
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.table {
+  table-layout: fixed;
+}

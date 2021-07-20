@@ -1,0 +1,13 @@
+.header {
+  height: 100%;
+  margin: 0;
+}
+.headerBackground {
+  /* background-image: url("background_pic_1.jpg"); */
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
