@@ -14,7 +14,7 @@ const ShowClientsAndPhotographers = () => {
     // }
     // var all_clients = []
     const ClientBtnClick = (e)=>{
-        var response = axios.get("http://localhost:4000/clients").then((response)=>{
+        var response = axios.get(process.env.REACT_APP_BACKEND_URL+"/clients").then((response)=>{
             // clients = response.data;
             var all_clients = response.data;
             console.log("ALL CLIENTS IN DATABASE:");
@@ -25,7 +25,7 @@ const ShowClientsAndPhotographers = () => {
     }
 
     const PhotographerBtnClick = (e)=>{
-        var response = axios.get("http://localhost:4000/photographers").then((response)=>{
+        var response = axios.get(process.env.REACT_APP_BACKEND_URL+"/photographers").then((response)=>{
             // clients = response.data;
             var all_photographers = response.data;
             console.log("ALL PHOTOGRAPHERS IN DATABASE:");
