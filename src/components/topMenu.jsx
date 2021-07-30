@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
+
 import './topMenu.css'
 
 
@@ -29,39 +31,23 @@ class Header extends Component {
         setInterval( () => { this.setBackground()},5000 )
     }
 
+    openBooking = () => {
+        
+    }
+
     render() { 
         return (
             <div>
-            <div className="headerBackground" style={{backgroundImage:"url('"+ this.state.pic+"')"}}></div> 
+                <div className="headerBackground" style={{backgroundImage:"url('"+ this.state.pic+"')"}}>
+                    <Link to='/booking'>
+                    <button className="bookButton" onClick={this.openBooking}>
+                    Book Now!
+                    </button>
+                    </Link>
+                </div> 
             </div>
         );
     }
 }
  
 export default Header;
-
-
-// function setBackground(){
-
-//     const images = [
-//         'url("background_pic_1.jpg")',
-//         'url("background_pic_2.jpg")',
-//         'url("background_pic_3.jpg")',
-//     ]
-
-//     const current_background = document.querySelector('h1')
-//     const new_background = images[Math.floor(Math.random() * images.length)]
-//     current_background.style.background = new_background;
-//     document.getElementById("top_home_page").style.height= "100%"; 
-//     document.getElementById("top_home_page").style.backgroundRepeat = "no-repeat"; 
-//     document.getElementById("top_home_page").style.backgroundSize = "cover"; 
-
-
-    
-// }
-
-
-
-// function changeBackground(){
-//     setInterval(setBackground,  5000)
-// }

@@ -11,3 +11,13 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.bookButton {
+  height: 50px;
+  width: 200px;
+  position: relative;
+  left: 5%;
+  top: 50%;
+  /* margin: 50% 80% 50% 20%; */
+  /* margin-left: 20vw;1 */
+}
