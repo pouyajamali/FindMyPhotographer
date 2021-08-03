@@ -15,13 +15,13 @@ export const MenuItems = [
     cName: 'nav-links'
 },
 {
-    title: 'Log in',
-    url: '#',
+    title: 'Sign In / Sign Up',
+    url: '/login',
     cName: 'nav-links'
 },
-{
-    title: 'Sign Up',
-    url: '#',
-    cName: 'nav-links'
-},
+// {
+//     title: 'Sign Up',
+//     url: '#',
+//     cName: 'nav-links'
+// },
 ]

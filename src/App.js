@@ -8,20 +8,22 @@ import ShowClientsAndPhotographers from './components/showClients/showClientsAnd
 import AboutUs from './AboutUs';
 import Booking from './Booking';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import SignInScreen from './Firebase'
 
 
 function App() {
     
     return (
         <Router>
-        <switch>
+        <Switch>
             <div>
                 <Navbar />
                 <Route exact path="/" component={HomePage} />
                 <Route path="/about" component={AboutUs} />
                 <Route path="/booking" component={Booking} />
+                <Route path="/login" component={SignInScreen} />
             </div>
-        </switch>
+        </Switch>
         </Router>
   );
 }
