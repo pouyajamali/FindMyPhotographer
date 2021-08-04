@@ -23,7 +23,7 @@ export const Booking = () => {
     var [title, setTitle] = useState()
     var [description, setDescription] = useState()
     var [name, setName] = useState()
-    var [Photographer, setPhotographer] = useState()
+    var [photographer, setPhotographer] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
 
@@ -40,7 +40,7 @@ export const Booking = () => {
         setPhotographer(event.target.value)
     }
     const statusUpdate = (event) => {
-        setPhotographer(event.target.value)
+        setStatus(event.target.value)
     }
     const offerUpdate = (event) => {
         setOffer(event.target.value)
@@ -57,13 +57,19 @@ export const Booking = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: name,
-
+                title,
+                description,
+                client: "60f5b55130b4c2591034acc8",
+                photographer: "60f5b55130b4c2591034acc8",
+                status,
+                client_offer: offer
             })
         })
             .then(() => {
                 // Once posted, the user will be notified 
                 alert('You have been added to the system!');
+            }).catch((err) => {
+                console.log(err);
             })
     }
 
@@ -72,7 +78,7 @@ export const Booking = () => {
     // }
     // render() {
     return (
-        <form onSubmit={handleSubmit}>
+        <div >
             <h1>Booking application</h1>
             <p>Project name:</p>
             <input
@@ -88,12 +94,12 @@ export const Booking = () => {
             <p>Client:</p>
             <input
                 type='text'
-                required onChange="60f5b55130b4c2591034acc8"
+                required 
             />
             <p>Photographer:</p>
             <input
                 type='text'
-                required onChange="60f5b55130b4c2591034acc8"
+                required 
             />
             <p>Status:</p>
             <input
@@ -105,8 +111,8 @@ export const Booking = () => {
                 type='text'
                 required onChange={offerUpdate}
             />
-            <button type="submit">Submit</button>
-        </form>
+            <button type="submit" onClick={handleSubmit}>Submit</button>
+        </div>
 
     );
 }
