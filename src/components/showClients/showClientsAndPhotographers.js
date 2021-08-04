@@ -25,7 +25,7 @@ const ShowClientsAndPhotographers = () => {
 
     return (
         <div>
-            <table class="table table-striped">
+            <table className="table">
                 <tr>
                     <th>Name</th>
                     <th>Phone</th>
@@ -33,7 +33,7 @@ const ShowClientsAndPhotographers = () => {
                     <th>Fees/hr</th>
                 </tr>
                 {Photographers.map(Photographer=> 
-                    <tr>
+                    <tr id = {Photographer._id}>
                         <td>
                         {Photographer.name}
                         </td>
