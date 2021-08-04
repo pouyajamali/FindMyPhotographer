@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MenuItems } from "./MenuItems"
 import "./Navbar.css"
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 class Navbar extends Component {
     state = { clicked: false }
@@ -12,7 +13,7 @@ class Navbar extends Component {
     render() {
         return(
             <nav className="NavbarItems">
-                <h1 className="navbar-logo">PhotoShoot<i className="fas fa-camera"></i></h1>
+                <a href="/"><h1 className="navbar-logo">Find My Photographer<i className="fas fa-camera"></i></h1></a> 
                 <div className="menu-icon" onClick={this.handleClick}>
                     <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
