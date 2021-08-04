@@ -40,7 +40,7 @@ class Header extends Component {
             <div>
                 <div className="headerBackground" style={{backgroundImage:"url('"+ this.state.pic+"')"}}>
                     <Link to='/booking'>
-                    <button className="bookButton" onClick={this.openBooking}>
+                    <button className="bookButton btn btn-primary" onClick={this.openBooking}>
                     Book Now!
                     </button>
                     </Link>
