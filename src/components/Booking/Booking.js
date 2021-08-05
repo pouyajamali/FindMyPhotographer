@@ -19,13 +19,13 @@ import React, { useState } from 'react';
 //     this.state = { username: '' };
 // }
 
-export const Booking = () => {
+export const Booking = (props) => {
     var [title, setTitle] = useState()
     var [description, setDescription] = useState()
     var [name, setName] = useState()
-    var [photographer, setPhotographer] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
+    var photographer= props.id;
 
     const titleUpdate = (event) => {
         setTitle(event.target.value)
@@ -36,9 +36,7 @@ export const Booking = () => {
     const clientUpdate = (event) => {
         setName(event.target.value)
     }
-    const photographerUpdate = (event) => {
-        setPhotographer(event.target.value)
-    }
+
     const statusUpdate = (event) => {
         setStatus(event.target.value)
     }
@@ -78,7 +76,8 @@ export const Booking = () => {
     // }
     // render() {
     return (
-        <div >
+        <div>
+            <p>{props.photographerid}</p>
             <h1>Booking application</h1>
             <p>Project name:</p>
             <input
