@@ -1,6 +1,4 @@
 //rafce
-
-import axios from 'axios';
 import {useState, useEffect} from 'react'
 
 
@@ -25,29 +23,37 @@ const ShowClientsAndPhotographers = () => {
 
     return (
         <div>
-            <table class="table table-striped">
+            <table className="table">
+                <tbody>
                 <tr>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>email</th>
                     <th>Fees/hr</th>
                 </tr>
-                {Photographers.map(Photographer=> 
-                    <tr>
-                        <td>
+                {Photographers.map(Photographer=> ( 
+                    <tr key = {Photographer._id} id = {Photographer._id} >
+                        <td >
                         {Photographer.name}
                         </td>
-                        <td>
+                        <td >
                         {Photographer.phone}
                         </td>
-                        <td>
+                        <td >
                         {Photographer.email}
                         </td>
-                        <td>
+                        <td >
                         {Photographer.fees}
                         </td>
+                        <td>
+                            <a href= "/" >Book</a>
+                        </td>
+                        <td>
+                            <a href= "/" >Show Profile</a>
+                        </td>
                     </tr>
-                )}
+                ))}
+            </tbody>
             </table> 
         </div>
         

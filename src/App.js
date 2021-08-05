@@ -6,7 +6,7 @@ import HomePage from './components/HomePage/HomePage'
 import AboutUs from './components/AboutUs/AboutUs';
 import Booking from './components/Booking/Booking';
 import SignInScreen from './components/SignInUp/Firebase'
-import UserProfile from './components/UserProfile/UserProfile'
+import PhotographerProfile from './components/UserProfile/PhotographerProfile'
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
                 <Route path="/about" component={AboutUs} />
                 <Route path="/booking" component={Booking} />
                 <Route path="/login" component={SignInScreen} />
-                <Route path="/userProfile" component={UserProfile} />
+                <Route path="/photographerProfile" component={PhotographerProfile} />
             </>
         </Switch>
         </Router>
