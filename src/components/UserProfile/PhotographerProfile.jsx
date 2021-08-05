@@ -34,10 +34,18 @@ function PhotographerProfile(props) {
 	// }
 	var dummy_photographer_user = props.user;
 
-	var dummy_photographer_bookings = [{tags: [" cars "], _id: "1", title: "Honda Civic", description: "Honda Civic pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
+	var dummy_photographer_bookings = [
+										{tags: [" cars "], _id: "1", title: "Honda Civic", description: "Honda Civic pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
 										{tags: [" cars "], _id: "2", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
-										{tags: [" cars "], _id: "3", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"}]
+										{tags: [" cars "], _id: "3", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"}
+									]
 
+	var dummy_review = [
+						{author: "john", description:"I had an amazing experience with this great photographer"},
+						{author: "alex", description:"This guy is super talented!"}
+	]
+	/////////////////////////////////////////////////////////////////////////////
+	
 	const { value:Name, bind:bindName, reset:resetName } = useInput('');
 	const { value:Email, bind:bindEmail, reset:resetEmail } = useInput('');
 	const { value:Phone, bind:bindPhone, reset:resetPhone} = useInput('');
@@ -61,7 +69,7 @@ function PhotographerProfile(props) {
 	}
 
 
-	const renderTableData = (booking, index) => {
+	const renderBookingsTable = (booking, index) => {
 		return(
 			<tr key={index}>
 				<td>{booking._id}</td>
@@ -71,21 +79,20 @@ function PhotographerProfile(props) {
 			</tr>
 		)
 	}
-	
-	// var [isSignedIn, setIsSignedIn] = useState(false);
-	// var [user, setUser] = useState(0);
 
-	// useEffect(() => {
-	// 	console.log("useEffect")
-	// 	const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-	// 		setUser(user)
-	// 		setIsSignedIn(!!user);
-	// 	});
-	// 	return () => unregisterAuthObserver();
-	// }, []);
+	const renderReviewsTable = (review, index) => {
+		return(
+			<tr key={index}>
+				<td>{review.author + ":"}</td>
+				<td>{review.description}</td>
+				<hr />
+			</tr>
+
+		)
+	}
 
 	return (
-		<div>
+		<div className="photographerProfile">
 			<h2>Photographer Panel:</h2>
 			<div className="tableHolder">
 				<p>Photographer Tags: {dummy_photographer_user.tags}</p>
@@ -105,17 +112,38 @@ function PhotographerProfile(props) {
 			</div><br/><br/>
 			<h2>Bookings Panel:</h2>
 			<div>
-				<ReactBootStrap.Table striped bordered hover>
+				<ReactBootStrap.Table strped bordered hover>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Title</th>
+							<th>Status</th>
+							<th>Fee</th>
+						</tr>
+					</thead>
 					<tbody>
-						{dummy_photographer_bookings.map(renderTableData)}
+						{dummy_photographer_bookings.map(renderBookingsTable)}
 					</tbody>
 				</ReactBootStrap.Table>	
 			</div><br/>
 			<h2>Portfolio:</h2><br/>
 			<h2>Reviews:</h2>
+			<div>
+				<br/>
+				<table className="reviewHolder">
+					<thead>
+						<tr>
+							<th>Author</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						{dummy_review.map(renderReviewsTable)}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
-
 }
 export default PhotographerProfile
 
@@ -220,7 +248,7 @@ export default PhotographerProfile
 //          ]
 //       }
 //    }
-//    renderTableData() {
+//    renderBookingsTable() {
 // 	return this.state.students.map((student, index) => {
 // 	   const { id, name, age, email } = student //destructuring
 // 	   return (
@@ -240,7 +268,7 @@ export default PhotographerProfile
 // 		  <h1 id='title'>React Dynamic Table</h1>
 // 		  <table id='students'>
 // 			 <tbody>
-// 				{this.renderTableData()}
+// 				{this.renderBookingsTable()}
 // 			 </tbody>
 // 		  </table>
 // 	   </div>
