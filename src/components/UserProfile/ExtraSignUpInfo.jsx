@@ -9,3 +9,5 @@ function ExtraSignUpInfo (props){
         </div>
     );
 }
+
+export default ExtraSignUpInfo;
