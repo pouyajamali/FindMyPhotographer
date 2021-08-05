@@ -11,7 +11,7 @@ function HomePage() {
         <div className="App">
             <Header />
             <HomeContent />
-            <ShowClientsAndPhotographers />
+            {/* <ShowClientsAndPhotographers /> */}
         </div>
   );
 }
