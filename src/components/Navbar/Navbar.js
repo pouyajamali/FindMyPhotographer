@@ -2,6 +2,8 @@ import {  useState, useEffect } from 'react';
 import "./Navbar.css"
 import firebase from "firebase";
 // import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
 
 function Navbar() {
 
@@ -28,7 +30,6 @@ function Navbar() {
 
     // Listen to the Firebase Auth state and set the local state.
   	useEffect(() => {
-		console.log("useEffect")
 		const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
 			setIsSignedIn(!!user);
 		});
@@ -44,7 +45,12 @@ function Navbar() {
 		MenuItems.push(
 			{
 				title: 'Sign Out',
-				url: "#",
+				url: "/",
+				cName: 'nav-links'
+			},
+			{
+				title: 'Profile',
+				url: "/userProfile",
 				cName: 'nav-links'
 			}
 		);
@@ -53,13 +59,12 @@ function Navbar() {
 		MenuItems.push(
 			{
 				title: 'Sign In/Up',
-				url: '/login',
+				url: '/userProfile',//login
 				cName: 'nav-links'
 			}
 		);
 	}
 
-    console.log("menuItems right before return ",MenuItems)
 
 	return(
 		<nav className="NavbarItems">
@@ -71,7 +76,7 @@ function Navbar() {
 				{MenuItems.map((item, index) => {
 					return (
 						<li key={index}>
-							{item.title === "Sign Out" ? <a className={item.cName} href="#" onClick={() => signOut()}>{item.title}</a>: <a className={item.cName} href={item.url}>{item.title}</a>}
+							{item.title === "Sign Out" ? <a className={item.cName} href="/" onClick={() => signOut()}>{item.title}</a>: <a className={item.cName} href={item.url}>{item.title}</a>}
 						</li>
 					)
 				})}

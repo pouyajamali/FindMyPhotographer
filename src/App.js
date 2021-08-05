@@ -5,8 +5,8 @@ import Navbar from "./components/Navbar/Navbar"
 import HomePage from './components/HomePage/HomePage'
 import AboutUs from './components/AboutUs/AboutUs';
 import Booking from './components/Booking/Booking';
-import SignInScreen from './components/SignInUp/Firebase'
-import PhotographerProfile from './components/UserProfile/PhotographerProfile'
+// import SignInScreen from './components/SignInUp/Firebase';
+import UserProfile from './components/UserProfile/UserProfile';
 
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
                 <Route exact path="/" component={HomePage} />
                 <Route path="/about" component={AboutUs} />
                 <Route path="/booking" component={Booking} />
-                <Route path="/login" component={SignInScreen} />
-                <Route path="/photographerProfile" component={PhotographerProfile} />
+                {/* <Route path="/login" component={SignInScreen} /> */}
+                <Route path="/userProfile" component={UserProfile} />
             </>
         </Switch>
         </Router>
