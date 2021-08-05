@@ -91,16 +91,6 @@ export const Booking = () => {
                 type='text'
                 required onChange={descriptionUpdate}
             />
-            <p>Client:</p>
-            <input
-                type='text'
-                required 
-            />
-            <p>Photographer:</p>
-            <input
-                type='text'
-                required 
-            />
             <p>Status:</p>
             <input
                 type='text'

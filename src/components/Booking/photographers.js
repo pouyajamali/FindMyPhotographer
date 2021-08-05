@@ -45,7 +45,7 @@ const ShowPhotographers = () => {
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <a href="/" >Book</a>
+                                <a href="/photographers/book" >Book</a>
                             </td>
                             <td>
                                 <a href="/" >Show Profile</a>
