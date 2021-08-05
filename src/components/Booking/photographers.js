@@ -22,7 +22,9 @@ const ShowPhotographers = () => {
     }
 function bookingNow(id){
     console.log("Clicked" + id);
-    <Booking PhotographerId={id} />
+    // <Booking PhotographerId={id} />
+    <Route name="/Booking" path="/:id" handler={CreateIdeaView} />
+
 }
     return (
         <div>
