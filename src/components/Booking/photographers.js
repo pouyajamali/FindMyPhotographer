@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Booking from "../Booking/Booking"
 
 
 
@@ -19,7 +20,10 @@ const ShowPhotographers = () => {
         console.log(data);
         return data
     }
-
+function bookingNow(id){
+    console.log("Clicked" + id);
+    <Booking PhotographerId={id} />
+}
     return (
         <div>
             <table className="table">
@@ -45,9 +49,10 @@ const ShowPhotographers = () => {
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <a href="/photographers/book" >Book</a>
+                                <button onClick={() => { bookingNow(Photographer._id)}}>Book This Photographer</button>
                             </td>
                             <td>
+
                                 <a href="/" >Show Profile</a>
                             </td>
                         </tr>

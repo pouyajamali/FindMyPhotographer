@@ -25,7 +25,7 @@ export const Booking = (props) => {
     var [name, setName] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
-    var photographer= props.id;
+    var photographer = props.PhotographerId;
 
     const titleUpdate = (event) => {
         setTitle(event.target.value)
@@ -58,7 +58,7 @@ export const Booking = (props) => {
                 title,
                 description,
                 client: "60f5b55130b4c2591034acc8",
-                photographer: "60f5b55130b4c2591034acc8",
+                photographer,
                 status,
                 client_offer: offer
             })
