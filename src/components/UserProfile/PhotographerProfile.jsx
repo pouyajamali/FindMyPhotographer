@@ -85,7 +85,6 @@ function PhotographerProfile(props) {
 			<tr key={index}>
 				<td>{review.author + ":"}</td>
 				<td>{review.description}</td>
-				<hr />
 			</tr>
 
 		)
@@ -112,7 +111,7 @@ function PhotographerProfile(props) {
 			</div><br/><br/>
 			<h2>Bookings Panel:</h2>
 			<div>
-				<ReactBootStrap.Table strped bordered hover>
+				<ReactBootStrap.Table striped bordered hover>
 					<thead>
 						<tr>
 							<th>ID</th>

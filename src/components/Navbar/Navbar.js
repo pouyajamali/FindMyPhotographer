@@ -13,7 +13,7 @@ function Navbar() {
     var MenuItems = [
         {
             title: 'Book',
-            url: '/booking',
+            url: '/photographers',
             cName: 'nav-links'
         },
         {
