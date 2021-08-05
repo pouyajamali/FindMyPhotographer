@@ -2,8 +2,8 @@ import {  useState, useEffect } from 'react';
 import firebase from "firebase";
 import PhotographerProfile from './PhotographerProfile';
 import ClientProfile from './ClientProfile';
-import { Redirect } from 'react-router-dom';
 import SignInScreen from '../SignInUp/Firebase';
+import ExtraSignUpInfo from './ExtraSignUpInfo';
 
 function UserProfile(){
 
@@ -25,6 +25,7 @@ function UserProfile(){
             tags: [" weddings ", " cars "],
             type: "photographer"
         }
+        dummy_photographer_user = null
         return dummy_photographer_user;
     };
 
@@ -49,11 +50,10 @@ function UserProfile(){
     else if (isSignedIn && userData.type === "photographer"){
         return ( <PhotographerProfile user={userData}/> );
     }
-    // else if (newUser){
-
-    // }
+    else if (isSignedIn && userData == null){
+        return(<ExtraSignUpInfo/>);
+    }
     else{
-        setTimeout(1000);
         return( <SignInScreen/> );
     }
     
