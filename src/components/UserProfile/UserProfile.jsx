@@ -30,13 +30,7 @@ function UserProfile(){
 
 	useEffect(() => {
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-            // setUser(user)
 			setIsSignedIn(!!user);
-            // let currentUser = firebase.auth().currentUser;
-            // setUser(currentUser);
-            // var data = getUserData(currentUser);
-            // setUserData(data);
-            // // console.log("useEffect", user, userData);
 		});
 		return ()=>unregisterAuthObserver();
 	}, []);
@@ -44,17 +38,10 @@ function UserProfile(){
     useEffect(() => {
         let currentUser = firebase.auth().currentUser;
         setUser(currentUser);
-
         var data = getUserData(currentUser);
         setUserData(data);
         console.log("useEffect", user, userData);
     },[isSignedIn]);
-
-    // return(
-    //     <div> 
-    //         { isSignedIn ? PhotographerProfile : Navbar}
-    //     </div>
-    // );
 
     if (isSignedIn && userData.type === "client"){
         return ( <ClientProfile user={userData}/> );
