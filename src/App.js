@@ -4,7 +4,7 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar"
 import HomePage from './components/HomePage/HomePage'
 import AboutUs from './components/AboutUs/AboutUs';
-import Booking from './components/Booking/Booking';
+import Booking from './components/Booking/photographers';
 import SignInScreen from './components/SignInUp/Firebase'
 import PhotographerProfile from './components/UserProfile/PhotographerProfile'
 
@@ -18,7 +18,7 @@ function App() {
                 <Navbar />
                 <Route exact path="/" component={HomePage} />
                 <Route path="/about" component={AboutUs} />
-                <Route path="/booking" component={Booking} />
+                <Route path="/photographers" component={Booking} />
                 <Route path="/login" component={SignInScreen} />
                 <Route path="/photographerProfile" component={PhotographerProfile} />
             </>
