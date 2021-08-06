@@ -1,12 +1,9 @@
-import axios from 'axios';
 import {useState, useEffect} from 'react';
-import $ from 'jquery';
 import * as ReactBootStrap from "react-bootstrap";
-import firebase from "firebase";
 import "./UserStyles.css"
 
 export const updateBooking = (booking_id, updated_booking) => {
-	var url = process.env.REACT_APP_BACKEND_URL + "/booking/" + booking_id;
+	var url = process.env.REACT_APP_BACKEND_URL + "/bookings/" + booking_id;
 	fetch(url, {
 		method: 'POST',
 		headers: {
@@ -19,7 +16,6 @@ export const updateBooking = (booking_id, updated_booking) => {
 		if (res.ok){
 			alert("Booking updated successfully");
 			window.location.reload();
-			// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
 		}
 		else{
 			alert("Booking could not be updated");
@@ -50,7 +46,7 @@ export const CounterOfferInput = (props) => {
 	const handleKeyDown = (event) => {
 	  if (event.key === 'Enter') {
 		var value = parseFloat(event.target.value);
-		var booking_id = props.booking_id
+		var booking_id = props.booking._id
 		var updated_booking = {
 			_id: booking_id,
 			counter_offer: value,
@@ -60,21 +56,17 @@ export const CounterOfferInput = (props) => {
 	  }
 	}
   
-	return <input style={{width:"100%"}} type="text" onKeyDown={e=>handleKeyDown(e)} />
+	return <input placeholder={props.booking.counter_offer ? props.booking.counter_offer : ""} style={{width:"100%"}} type="text" onKeyDown={e=>handleKeyDown(e)} />
 }
 
 function PhotographerProfile(props) {
 	
-	// var dummy_photographer_user = props.user;
 	var [photographerInfo, setPhotographerInfo] = useState(0);
 	var [bookings, setBookings] = useState([]);
 	var [reviews, setReviews] = useState([]);
 	var [portfolio, setPortfolio] = useState(0);
 
-
-	const getUserData = async (id) => {//
-        // window.location.reload()
-
+	const getUserData = async (id) => {
         var url = process.env.REACT_APP_BACKEND_URL + '/profiles/photographer/' + id;
         const res = await fetch(url);
         const data = await res.json()
@@ -83,6 +75,7 @@ function PhotographerProfile(props) {
     };
 
 	useEffect(()=>{
+		console.log("props.user",props.user)
 		var data = getUserData(props.user._id).then((data)=>{
 			console.log ("data",data);
 			setPhotographerInfo(data.personalInfo);
@@ -92,14 +85,12 @@ function PhotographerProfile(props) {
 	}, [])
 	
 	const { value:Name, bind:bindName, reset:resetName } = useInput('');
-	const { value:Email, bind:bindEmail, reset:resetEmail } = useInput('');
 	const { value:Phone, bind:bindPhone, reset:resetPhone} = useInput('');
 	const { value:Fee, bind:bindFee, reset:resetFee} = useInput('');
 
 	const handleSubmit = (evt) => {
 		var updated_photographer = {
 			name: Name ? Name : photographerInfo.name,
-			// email: Email,
 			phone: Phone ? Phone : photographerInfo.phone,
 			fees: Fee ? Fee : photographerInfo.fees,
 			tags: photographerInfo.tags,
@@ -107,7 +98,6 @@ function PhotographerProfile(props) {
 		}
 		evt.preventDefault();
 		resetName();
-		resetEmail();
 		resetPhone();
 		resetFee();
 
@@ -124,7 +114,6 @@ function PhotographerProfile(props) {
 			if (res.ok){
 				alert("Photographer updated successfully");
 				window.location.reload();
-				// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
 			}
 			else{
 				alert("Photographer could not be updated");
@@ -159,12 +148,12 @@ function PhotographerProfile(props) {
 	const renderBookingsTable = (booking, index) => {
 		return(
 			<tr key={index}>
-				<td>{booking.client}{/*booking.client.name*/}</td>
+				<td>{booking.client.name}</td>
 				<td>{booking.title}</td>
 				<td>{booking.description}</td>
 				<td>{booking.status}</td>
 				<td>{booking.client_offer}</td>
-				<td><CounterOfferInput booking_id={booking._id}/></td>
+				<td><CounterOfferInput booking={booking}/></td>
 				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleAcceptBooking(e,booking._id)}>Accept</button> : ""} </td>
 				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleRejectBooking(e,booking._id)}>Reject</button> : ""} </td>
 			</tr>

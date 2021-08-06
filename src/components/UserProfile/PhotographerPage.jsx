@@ -29,21 +29,29 @@ function PhotographerPage(props) {
 	console.log("PhotographerPage stateData", photographer)
 	
 	var [isSignedIn, setIsSignedIn] = useState(false);
-
+	var [user, setUser] = useState(0);
+    var [userData, setUserData] = useState(0);
 
 	var [reviews, setReviews] = useState([]);
 	// var [portfolio, setPortfolio] = useState(0);
 
-	const getUserData = async (id) => {//
+	const getPhotographerReviews = async (id) => {//
         var url = process.env.REACT_APP_BACKEND_URL + '/profiles/photographer/' + id;
         const res = await fetch(url);
         const data = await res.json()
         console.log ("data",data);
         return data
     };
+	
+	const getUserData = async (user) => {
+        var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + user.email;
+        const res = await fetch(url);
+        const data = await res.json()
+        return data
+    };
 
 	useEffect(()=>{
-		var data = getUserData(photographer._id).then((data)=>{
+		var data = getPhotographerReviews(photographer._id).then((data)=>{
 			console.log ("data",data);
 			setReviews(data.reviewInfo);
 		});
@@ -52,20 +60,64 @@ function PhotographerPage(props) {
 		});
 		return ()=>unregisterAuthObserver();
 	}, [])
+
+	useEffect(() => {
+        let currentUser = firebase.auth().currentUser;
+        setUser(currentUser);
+        if (currentUser !== null){
+			console.log("called getUserData")
+            var data = getUserData(currentUser).then((data)=>{
+				console.log ("called getUserData",data);
+                setUserData(data);
+            });
+        }
+    },[isSignedIn]);
+
+	var [isSameID, setIsSameID] = useState(0);
+	useEffect(() => {
+		if (userData.value)
+			setIsSameID(userData.value[0]._id === photographer._id);
+	},[userData]);
 	
-	const { value:Name, bind:bindName, reset:resetName } = useInput('');
+	const { value:Stars, bind:bindStars, reset:resetStars } = useInput('');
 	const { value:Review, bind:bindReview, reset:resetReview } = useInput('');
 
 
 	const handleSubmit = (evt) => {
-		var user_review = {
-			_id: "1",
+		var review = {
+			client: userData.value[0]._id,
+			clientName: userData.value[0].name,
+			photographer: photographer._id,
+			stars: Stars,
 			review: Review,
 		}
 		evt.preventDefault();
-		resetName();
+		resetStars();
 		resetReview();
-		return user_review;
+		// return review;
+
+		var url = process.env.REACT_APP_BACKEND_URL + "/reviews/";
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(review),
+		})
+		.then(res => {
+			console.log('Response:', res);
+			if (res.ok){
+				alert("Review saved successfully");
+				window.location.reload();
+				// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
+			}
+			else{
+				alert("Review could not be saved");
+			}
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
 	}
 
 	const renderReviewsTable = (review, index) => {
@@ -77,6 +129,8 @@ function PhotographerPage(props) {
 			</tr>
 		)
 	}
+
+	// console.log(userData.value[0]._id, photographer._id)
 
 	return (
 		<div className="photographerProfile">
@@ -104,6 +158,7 @@ function PhotographerPage(props) {
 					<thead>
 						<tr>
 							<th>Author</th>
+							<th>Stars</th>
 							<th>Description</th>
 						</tr>
 					</thead>
@@ -113,13 +168,13 @@ function PhotographerPage(props) {
 				</table> : "No Reviews"}
 			</div>
 			<br/><br/>
-			{isSignedIn ?
+			{isSignedIn && !isSameID?
 			<>	
 			<h2>Add your reviews below.</h2>
 			<div className="reviewHolder">
 				<form onSubmit={handleSubmit}>
-					<label>Author:</label><br/>
-					<input type="text" placeholder="You name" {...bindName} className="reviewAuthor"/><br/><br/>
+					<label>Stars:</label><br/>
+					<input min={0} max={5} type="number" placeholder="" {...bindStars} className="reviewAuthor"/>/5<br/><br/>
 					<label>Review Body:</label><br/>
 					<textarea placeholder="Your review goes here . . ." {...bindReview} className="reviewBox"></textarea>
 					<input type="submit" value="Submit" />
