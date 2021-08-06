@@ -3,8 +3,7 @@ import Booking from "../Booking/Booking"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-// var temp = 123;
-// export {temp};
+
 export let temp = 1234
 const ShowPhotographers = () => {
     const [Photographers, setPhotographers] = useState([])
@@ -23,17 +22,15 @@ const ShowPhotographers = () => {
         console.log(data);
         return data
     }
-    // var temp = null;
-    //export const sentId = temp
+
+
 
 function bookingNow(id){
     console.log("Clicked" + id);
-    // <Booking PhotographerId={id} />
     temp = id;
     <Booking />
     
 
-    // alert(temp);
 }
     return (
         <div>
