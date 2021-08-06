@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { pid }  from '../Photographer/photographers'
 
 // class Bookings extends React.Component {
 // componentDidMount() {
@@ -19,13 +20,15 @@ import React, { useState } from 'react';
 //     this.state = { username: '' };
 // }
 
+
 export const Booking = (props) => {
     var [title, setTitle] = useState()
     var [description, setDescription] = useState()
     var [name, setName] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
-    var photographer = props.PhotographerId;
+    var photographer = pid;
+    console.log(photographer)
 
     const titleUpdate = (event) => {
         setTitle(event.target.value)
@@ -65,7 +68,7 @@ export const Booking = (props) => {
         })
             .then(() => {
                 // Once posted, the user will be notified 
-                alert('You have been added to the system!');
+                alert('You have been added to the system!', pid);
             }).catch((err) => {
                 console.log(err);
             })
@@ -105,7 +108,6 @@ export const Booking = (props) => {
 
     );
 }
-// }
-//}
+
 
 export default Booking
