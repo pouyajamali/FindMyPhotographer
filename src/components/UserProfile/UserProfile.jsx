@@ -11,22 +11,28 @@ function UserProfile(){
 	var [user, setUser] = useState(0);
     var [userData, setUserData] = useState(0);
 
-    const getUserData =  (user) => {//async
-        // const res = await fetch('http://localhost:4000/photographers')
-        // const data = await res.json()
-        // console.log (data);
-        // return data
-        var dummy_photographer_user = {
-            _id: "1",
-            name: "pouya",
-            email: "pouya@gmail.com",
-            phone: "1234567890",
-            fees: "100$",
-            tags: [" weddings ", " cars "],
-            type: "photographer"
-        }
-        dummy_photographer_user = null
-        return dummy_photographer_user;
+    const getUserData = async (user) => {//
+        // window.location.reload()
+        var userDataFirebase = user.providerData[0]
+        // console.log("userDataFirebase",userDataFirebase)
+        var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + userDataFirebase.email;
+        const res = await fetch(url);
+        const data = await res.json()
+        // console.log ("data",data);
+        return data
+
+        // console.log("getting data for current user ",user);
+        // var dummy_photographer_user = {
+        //     _id: "1",
+        //     name: "pouya",
+        //     email: "pouya@gmail.com",
+        //     phone: "1234567890",
+        //     fees: "100$",
+        //     tags: [" weddings ", " cars "],
+        //     type: "photographer"
+        // }
+        // // dummy_photographer_user = {}
+        // return dummy_photographer_user;
     };
 
 	useEffect(() => {
@@ -39,23 +45,27 @@ function UserProfile(){
     useEffect(() => {
         let currentUser = firebase.auth().currentUser;
         setUser(currentUser);
-        var data = getUserData(currentUser);
-        setUserData(data);
-        console.log("useEffect", user, userData);
+        if (currentUser !== null){
+            var data = getUserData(currentUser).then((data)=>{
+                console.log ("data",data);
+                setUserData(data);
+                console.log("useEffect", user, userData);
+            });
+        }
     },[isSignedIn]);
 
     if (isSignedIn && userData.type === "client"){
-        return ( <ClientProfile user={userData}/> );
+        return ( <ClientProfile user={userData.value[0]}/> );
     }
     else if (isSignedIn && userData.type === "photographer"){
-        return ( <PhotographerProfile user={userData}/> );
+        return ( <PhotographerProfile user={userData.value[0]}/> );
     }
-    else if (isSignedIn && userData == null){
+    else if (isSignedIn && userData.type === null){
         return(<ExtraSignUpInfo/>);
     }
     else{
         return( <SignInScreen/> );
     }
-    
+
 };
 export default UserProfile;

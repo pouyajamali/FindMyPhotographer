@@ -21,6 +21,32 @@ export const useInput = initialValue => {
   };
 
 function PhotographerProfile(props) {
+	
+	// var dummy_photographer_user = props.user;
+	var [photographerInfo, setPhotographerInfo] = useState(0);
+	var [bookings, setBookings] = useState([]);
+	var [reviews, setReviews] = useState([]);
+	var [portfolio, setPortfolio] = useState(0);
+
+
+	const getUserData = async (id) => {//
+        // window.location.reload()
+
+        var url = process.env.REACT_APP_BACKEND_URL + '/profiles/photographer/' + id;
+        const res = await fetch(url);
+        const data = await res.json()
+        console.log ("data",data);
+        return data
+    };
+
+	useEffect(()=>{
+		var data = getUserData(props.user._id).then((data)=>{
+			console.log ("data",data);
+			setPhotographerInfo(data.personalInfo);
+			setBookings(data.bookingInfo);
+			setReviews(data.reviewInfo);
+		});
+	}, [])
 
 	//Dummy: To be deleted
 	// var dummy_photographer_user = {
@@ -32,18 +58,19 @@ function PhotographerProfile(props) {
 	// 	tags: [" weddings ", " cars "],
 	// 	type: "photographer"
 	// }
-	var dummy_photographer_user = props.user;
+	
+	// console.log("user in photographer profile",photographerInfo);
 
-	var dummy_photographer_bookings = [
-										{tags: [" cars "], _id: "1", title: "Honda Civic", description: "Honda Civic pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
-										{tags: [" cars "], _id: "2", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
-										{tags: [" cars "], _id: "3", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"}
-									]
+	// var dummy_photographer_bookings = [
+	// 									{tags: [" cars "], _id: "1", title: "Honda Civic", description: "Honda Civic pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
+	// 									{tags: [" cars "], _id: "2", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
+	// 									{tags: [" cars "], _id: "3", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"}
+	// 								]
 
-	var dummy_review = [
-						{author: "john", description:"I had an amazing experience with this great photographer"},
-						{author: "alex", description:"This guy is super talented!"}
-	]
+	// var dummy_review = [
+	// 					{author: "john", description:"I had an amazing experience with this great photographer"},
+	// 					{author: "alex", description:"This guy is super talented!"}
+	// ]
 	/////////////////////////////////////////////////////////////////////////////
 	
 	const { value:Name, bind:bindName, reset:resetName } = useInput('');
@@ -52,20 +79,42 @@ function PhotographerProfile(props) {
 	const { value:Fee, bind:bindFee, reset:resetFee} = useInput('');
 
 	const handleSubmit = (evt) => {
-		var dummy_photographer_user = {
-			_id: "1",
-			name: Name,
-			email: Email,
-			phone: Phone,
-			fees: Fee,
-			tags: [" weddings ", " cars "],
+		var updated_photographer = {
+			name: Name ? Name : photographerInfo.name,
+			// email: Email,
+			phone: Phone ? Phone : photographerInfo.phone,
+			fees: Fee ? Fee : photographerInfo.fees,
+			tags: photographerInfo.tags,
 			type: "photographer"
 		}
 		evt.preventDefault();
-		alert(dummy_photographer_user.name);
 		resetName();
 		resetEmail();
 		resetPhone();
+		resetFee();
+
+		var url = process.env.REACT_APP_BACKEND_URL + "/photographers/" + props.user._id;
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(updated_photographer),
+		})
+		.then(res => {
+			console.log('Response:', res);
+			if (res.ok){
+				alert("Photographer updated successfully");
+				window.location.reload();
+				// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
+			}
+			else{
+				alert("Photographer could not be updated");
+			}
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
 	}
 
 
@@ -75,7 +124,7 @@ function PhotographerProfile(props) {
 				<td>{booking._id}</td>
 				<td>{booking.title}</td>
 				<td>{booking.status}</td>
-				<td>{booking.fee}</td>
+				<td>{booking.client_offer}</td>
 			</tr>
 		)
 	}
@@ -83,29 +132,34 @@ function PhotographerProfile(props) {
 	const renderReviewsTable = (review, index) => {
 		return(
 			<tr key={index}>
-				<td>{review.author + ":"}</td>
-				<td>{review.description}</td>
+				<td>{review.clientName}</td>
+				<td>{review.stars}</td>
+				<td>{review.review}</td>
 			</tr>
 
 		)
 	}
 
+	const uploadImages = () => {
+		console.log("upload images")
+	}
+
 	return (
 		<div className="photographerProfile">
-			<h2>Photographer Panel:</h2>
+			<h2>Photographer Panel: {photographerInfo.name}</h2>
 			<div className="tableHolder">
-				<p>Photographer Tags: {dummy_photographer_user.tags}</p>
+				<p>Photographer Tags: {photographerInfo.tags ? photographerInfo.tags.toString() : ""}</p>
 				<form onSubmit={handleSubmit}>
 					<label>Name:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.name} {...bindName} /><br/><br/>
-					<label>Email Address:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.email} {...bindEmail} /><br/><br/>
+					<input type="text" placeholder={photographerInfo.name} {...bindName} /><br/><br/>
+					{/* <label>Email Address:</label><br/>
+					<input type="text" placeholder={photographerInfo.email} {...bindEmail} /><br/><br/> */}
 					<label>Phone:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.phone} {...bindPhone} /><br/><br/>
+					<input type="text" placeholder={photographerInfo.phone} {...bindPhone} /><br/><br/>
 					<label>Fee:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.fees} {...bindFee} /><br/><br/>
-					{/* <label>Current Tags: {dummy_photographer_user.tags}</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.fees} {...bindFee} /><br/><br/> */}
+					<input type="text" placeholder={photographerInfo.fees} {...bindFee} /><br/><br/>
+					{/* <label>Current Tags: {photographerInfo.tags}</label><br/>
+					<input type="text" placeholder={photographerInfo.fees} {...bindFee} /><br/><br/> */}
 					<input type="submit" value="Update" />
 				</form>
 			</div><br/><br/>
@@ -117,15 +171,16 @@ function PhotographerProfile(props) {
 							<th>ID</th>
 							<th>Title</th>
 							<th>Status</th>
-							<th>Fee</th>
+							<th>Client Offer</th>
 						</tr>
 					</thead>
 					<tbody>
-						{dummy_photographer_bookings.map(renderBookingsTable)}
+						{bookings.map(renderBookingsTable)}
 					</tbody>
 				</ReactBootStrap.Table>	
 			</div><br/>
-			<h2>Portfolio:</h2><br/>
+			<h2>Portfolio:</h2>
+			<button className="btn btn-primary" onClick={()=>uploadImages()}>Upload Images</button><br/><br/>
 			<h2>Reviews:</h2>
 			<div>
 				<br/>
@@ -133,11 +188,12 @@ function PhotographerProfile(props) {
 					<thead>
 						<tr>
 							<th>Author</th>
+							<th>Stars</th>
 							<th>Description</th>
 						</tr>
 					</thead>
 					<tbody>
-						{dummy_review.map(renderReviewsTable)}
+						{reviews.map(renderReviewsTable)}
 					</tbody>
 				</table>
 			</div>

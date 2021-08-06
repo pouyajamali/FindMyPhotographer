@@ -24,9 +24,9 @@ const uiConfig = {
 			firebase.auth.FacebookAuthProvider.PROVIDER_ID,
 			firebase.auth.EmailAuthProvider.PROVIDER_ID
 	],
-	// callbacks: {
-	// 	signInSuccessWithAuthResult: () => false
-	// },
+	callbacks: {
+		signInSuccessWithAuthResult: () => false
+	},
 };
 
 function SignInScreen() {
