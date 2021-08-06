@@ -5,6 +5,31 @@ import * as ReactBootStrap from "react-bootstrap";
 import firebase from "firebase";
 import "./UserStyles.css"
 
+export const updateBooking = (booking_id, updated_booking) => {
+	var url = process.env.REACT_APP_BACKEND_URL + "/booking/" + booking_id;
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(updated_booking),
+	})
+	.then(res => {
+		console.log('Response:', res);
+		if (res.ok){
+			alert("Booking updated successfully");
+			window.location.reload();
+			// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
+		}
+		else{
+			alert("Booking could not be updated");
+		}
+	})
+	.catch((error) => {
+		console.error('Error:', error);
+	});
+};
+
 export const useInput = initialValue => {
 	const [value, setValue] = useState(initialValue);
 
@@ -19,7 +44,24 @@ export const useInput = initialValue => {
 		}
 	  }
 	};
-  };
+};
+
+export const CounterOfferInput = (props) => {
+	const handleKeyDown = (event) => {
+	  if (event.key === 'Enter') {
+		var value = parseFloat(event.target.value);
+		var booking_id = props.booking_id
+		var updated_booking = {
+			_id: booking_id,
+			counter_offer: value,
+		}
+		console.log('do validate',event, updated_booking)
+		updateBooking(booking_id, updated_booking);
+	  }
+	}
+  
+	return <input style={{width:"100%"}} type="text" onKeyDown={e=>handleKeyDown(e)} />
+}
 
 function PhotographerProfile(props) {
 	
@@ -93,14 +135,38 @@ function PhotographerProfile(props) {
 		});
 	}
 
+	const handleAcceptBooking = (e,booking_id) => {
+		console.log("accept booking",booking_id)
+		// POST req to api to set status of booking to "Accepted", booking id: booking._id
+		var updated_booking = {
+			_id: booking_id,
+			status: "Accepted",
+		}
+		updateBooking(booking_id, updated_booking);
+	};
+
+	const handleRejectBooking = (e,booking_id) => {
+		console.log("Reject booking",booking_id)
+		// POST req to api to set status of booking to "Rejected", booking id: booking._id
+		var updated_booking = {
+			_id: booking_id,
+			status: "Rejected",
+		};
+		updateBooking(booking_id, updated_booking);
+
+	};
 
 	const renderBookingsTable = (booking, index) => {
 		return(
 			<tr key={index}>
-				<td>{booking._id}</td>
+				<td>{booking.client}{/*booking.client.name*/}</td>
 				<td>{booking.title}</td>
+				<td>{booking.description}</td>
 				<td>{booking.status}</td>
 				<td>{booking.client_offer}</td>
+				<td><CounterOfferInput booking_id={booking._id}/></td>
+				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleAcceptBooking(e,booking._id)}>Accept</button> : ""} </td>
+				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleRejectBooking(e,booking._id)}>Reject</button> : ""} </td>
 			</tr>
 		)
 	}
@@ -124,8 +190,8 @@ function PhotographerProfile(props) {
 		<div className="photographerProfile">
 			<h2>Photographer Panel: {photographerInfo.name}</h2>
 			<div className="tableHolder">
-				<p>Photographer Tags: {photographerInfo.tags ? photographerInfo.tags.toString() : ""}</p>
 				<form onSubmit={handleSubmit}>
+					<p>Photographer Tags: {photographerInfo.tags ? photographerInfo.tags.toString() : ""}</p>
 					<label>Name:</label><br/>
 					<input type="text" placeholder={photographerInfo.name} {...bindName} /><br/><br/>
 					{/* <label>Email Address:</label><br/>
@@ -140,21 +206,27 @@ function PhotographerProfile(props) {
 				</form>
 			</div><br/><br/>
 			<h2>Bookings Panel:</h2>
+			{bookings.length !== 0 ? 
 			<div>
 				<ReactBootStrap.Table striped bordered hover>
 					<thead>
 						<tr>
-							<th>ID</th>
+							<th>Client Name</th>
 							<th>Title</th>
+							<th>Description</th>
 							<th>Status</th>
 							<th>Client Offer</th>
+							<th>Counter Offer</th>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						{bookings.map(renderBookingsTable)}
 					</tbody>
 				</ReactBootStrap.Table>	
-			</div><br/>
+			</div> : "No Bookings"}
+			<br/>
 			<h2>Portfolio:</h2><br/>
 			<div className="imageContainer">
 				<img src="./background_pic_1.jpg" className="imgPortfolio"/>
@@ -164,6 +236,7 @@ function PhotographerProfile(props) {
 			<h2>Reviews:</h2>
 			<div>
 				<br/>
+				{reviews.length !== 0 ? 
 				<table className="reviewHolder">
 					<thead>
 						<tr>
@@ -175,7 +248,7 @@ function PhotographerProfile(props) {
 					<tbody>
 						{reviews.map(renderReviewsTable)}
 					</tbody>
-				</table>
+				</table> : "No Reviews"}
 			</div>
 		</div>
 	);

@@ -6,7 +6,8 @@ import HomePage from './components/HomePage/HomePage'
 import AboutUs from './components/AboutUs/AboutUs';
 import UserProfile from './components/UserProfile/UserProfile';
 import BookingPhotographer from './components/Photographer/photographers';
-import Booking from './components/Booking/Booking'
+import Booking from './components/Booking/Booking';
+import PhotographerPage from './components/UserProfile/PhotographerPage';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/userProfile" component={UserProfile} />
                 <Route path="/photographers" component={BookingPhotographer} />
                 <Route path="/book" component={Booking} />
+                <Route path="/photographerPage" component={PhotographerPage}/>
             </>
         </Switch>
         </Router>

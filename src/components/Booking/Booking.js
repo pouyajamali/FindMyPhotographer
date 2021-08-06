@@ -1,34 +1,56 @@
-
-import React, { useState } from 'react';
-import { pid }  from '../Photographer/photographers'
-
-// class Bookings extends React.Component {
-// componentDidMount() {
-//     // Simple POST request with a JSON body using fetch
-//     const requestOptions = {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ title: 'React POST Request Example' })
-//     };
-//     fetch(process.env.REACT_APP_BACKEND_URL + "/Bookings", requestOptions)
-//         .then(response => response.json())
-//         .then(data => this.setState({ postId: data.id }));
-// }
-
-// constructor(props) {
-//     super(props);
-//     this.state = { username: '' };
-// }
-
+import React, { useEffect, useState } from 'react';
+import firebase from "firebase";
+import SignInScreen from '../SignInUp/Firebase';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import PhotographerPage from '../UserProfile/PhotographerPage';
 
 export const Booking = (props) => {
+
+    /* check if user isSignedIn, then get user data */
+    var [firebaseUser, setfirebaseUser] = useState(0);
+    let photographer = props.location.state;
+    console.log(photographer)
+
+    var [isSignedIn, setIsSignedIn] = useState(false);
+    var [userData, setUserData] = useState(0)
+
+    useEffect(() => {
+        const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+			setIsSignedIn(!!user);
+		});
+		return ()=>unregisterAuthObserver();
+	}, []);
+
+    const getUserData = async (user) => {//
+        // window.location.reload()
+        // var userDataFirebase = user.providerData[0]
+        // console.log("userDataFirebase",userDataFirebase)
+        var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + user.email;
+        const res = await fetch(url);
+        const data = await res.json();
+        // console.log ("data",data);
+        return data
+    };
+
+    useEffect(() => {
+        let currentUser = firebase.auth().currentUser;
+        setfirebaseUser(currentUser);
+        console.log("hkhjjh",currentUser)
+        if (currentUser !== null){
+            var data = getUserData(currentUser).then((data)=>{
+                // console.log ("data",data);
+                setUserData(data);
+                // console.log("useEffect", user, userData);
+            });
+        }
+    },[isSignedIn]);
+    /* isSignedIn, userData, photographer ready to be user for booking */
+
     var [title, setTitle] = useState()
     var [description, setDescription] = useState()
     var [name, setName] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
-    var photographer = pid;
-    console.log(photographer)
 
     const titleUpdate = (event) => {
         setTitle(event.target.value)
@@ -47,9 +69,16 @@ export const Booking = (props) => {
         setOffer(event.target.value)
     }
 
-
-
     const handleSubmit = () => { // Once the form has been submitted, this function will post to the backend
+        var new_booking = {
+                title,
+                description,
+                client: userData.value[0]._id,
+                photographer: photographer.photographer._id,
+                status:"Pending",
+                client_offer: offer
+            }
+
         const postURL = process.env.REACT_APP_BACKEND_URL + "/Bookings" //Our previously set up route in the backend
         fetch(postURL, {
             method: 'POST',
@@ -57,56 +86,52 @@ export const Booking = (props) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                title,
-                description,
-                client: "60f5b55130b4c2591034acc8",
-                photographer,
-                status,
-                client_offer: offer
-            })
+            body: JSON.stringify(new_booking)
         })
-            .then(() => {
-                // Once posted, the user will be notified 
-                alert('You have been added to the system!', pid);
-            }).catch((err) => {
-                console.log(err);
-            })
+        .then(() => {
+            // Once posted, the user will be notified 
+            alert('Booking has been requested to photographer. Wait for response from photographere...');
+            window.location.replace("/")
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
-    // myChangeHandler = (event) => {
-    //     this.setState({ username: event.target.value });
-    // }
-    // render() {
-    return (
-        <div>
-            <p>{props.photographerid}</p>
-            <h1>Booking application</h1>
-            <p>Project name:</p>
-            <input
-                type='text'
-                required onChange={titleUpdate}
+    console.log(isSignedIn , photographer , userData)
+    
+    if (isSignedIn && photographer && userData){
+        return (
+            <div>
+                <div>
+                    <h1>Booking application </h1>
+                    <p><b>{userData.value[0].name}</b> sending booking request to <b>{photographer.photographer.name}</b></p>
+                    <form>
+                        <label>Project name: </label>
+                        <input type='text' required onChange={titleUpdate} /> <br/>
+                        <label>Briefly describe your project :</label>
+                        <input type='text' required onChange={descriptionUpdate} /><br/>
+                        {/* <label>Status: </label>
+                        <input type='text' required onChange={statusUpdate} /><br/> */}
+                        <label>Offering price: </label>
+                        <input type='text' required onChange={offerUpdate} /><br/>
+                        {/* <label>Tag :</label>
+                        <input type='text' required onChange={offerUpdate} /><br/> */}
+                        <button type="submit" onClick={handleSubmit}>Submit</button>
+                    </form>
+                </div>
+                <PhotographerPage user={photographer}/>
+            </div>
 
-            />
-            <p>Briefly describe your project:</p>
-            <input
-                type='text'
-                required onChange={descriptionUpdate}
-            />
-            <p>Status:</p>
-            <input
-                type='text'
-                required onChange={statusUpdate}
-            />
-            <p>Offering price:</p>
-            <input
-                type='text'
-                required onChange={offerUpdate}
-            />
-            <button type="submit" onClick={handleSubmit}>Submit</button>
-        </div>
+        );
+    }
+    else if (isSignedIn && !photographer){
+        window.location.replace("/photographers");
+    }
+    else{
+        return( <SignInScreen/> );
+    }
 
-    );
 }
 
 

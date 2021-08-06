@@ -13,7 +13,7 @@ function UserProfile(){
 
     const getUserData = async (user) => {//
         // window.location.reload()
-        var userDataFirebase = user.providerData[0]
+        // var userDataFirebase = user.providerData[0]
         // console.log("userDataFirebase",userDataFirebase)
         var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + user.email;
         const res = await fetch(url);

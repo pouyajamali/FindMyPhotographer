@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import Booking from "../Booking/Booking"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import PhotographerPage from '../UserProfile/PhotographerPage';
 
-
-export let pid = 1234
+// export let pid = 1234
 const ShowPhotographers = () => {
     const [Photographers, setPhotographers] = useState([])
 
@@ -26,13 +26,16 @@ const ShowPhotographers = () => {
 
 
 
-    function bookingNow(id){
-        console.log("Clicked" + id);
-        pid = id;
-        <Booking />
-        
-
-    }
+    // function bookingNow(id){
+    //     console.log("Clicked" + id);
+    //     pid = id;
+    //     // return(
+    //     //     </>
+    //             <Booking />
+    //         //     <PhotographerPage/>
+    //         // </>
+    //     // );
+    // }
 
     return (
         <div>
@@ -59,13 +62,25 @@ const ShowPhotographers = () => {
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <Link to='/book'>
-                                    <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button>
+                                <Link to={{
+                                    pathname: '/book',
+                                    // search: "?sort=name",
+                                    // hash: "#the-hash",
+                                    state: { photographer: Photographer }
+                                }}>
+                                    {/* <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button> */}
+                                    Book This Photographer
                                 </Link>
                             </td>
                             <td>
-
-                                <a href="/" >Show Profile</a>
+                                <Link to={{
+                                    pathname: '/photographerPage',
+                                    // search: "?sort=name",
+                                    // hash: "#the-hash",
+                                    state: { photographer: Photographer }
+                                }}>
+                                    Show Profile
+                                </Link>
                             </td>
                         </tr>
                     ))}
