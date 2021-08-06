@@ -105,8 +105,6 @@ function PhotographerProfile(props) {
 					<input type="text" placeholder={dummy_photographer_user.phone} {...bindPhone} /><br/><br/>
 					<label>Fee:</label><br/>
 					<input type="text" placeholder={dummy_photographer_user.fees} {...bindFee} /><br/><br/>
-					{/* <label>Current Tags: {dummy_photographer_user.tags}</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.fees} {...bindFee} /><br/><br/> */}
 					<input type="submit" value="Update" />
 				</form>
 			</div><br/><br/>
@@ -127,6 +125,11 @@ function PhotographerProfile(props) {
 				</ReactBootStrap.Table>	
 			</div><br/>
 			<h2>Portfolio:</h2><br/>
+			<div className="imageContainer">
+				<img src="./background_pic_1.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_2.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_3.jpg" className="imgPortfolio"/>
+			</div>
 			<h2>Reviews:</h2>
 			<div>
 				<br/>
@@ -146,133 +149,3 @@ function PhotographerProfile(props) {
 	);
 }
 export default PhotographerProfile
-
-
-// {
-//     "personalInfo": {
-//         "tags": [
-//             "wedding",
-//             "cars"
-//         ],
-//         "_id": "60f5b295c9554f57cd249d8b",
-//         "name": "Dhrubo",
-//         "email": "dhrubo@gmail.com",
-//         "phone": 9999999999,
-//         "fees": 50,
-//         "__v": 0
-//     },
-//     "bookingInfo": [
-//         {
-//             "tags": [],
-//             "_id": "6109d4bde7077153a4637081",
-//             "title": "New Job",
-//             "description": "Job Desc",
-//             "client": "60f5b55130b4c2591034acc8",
-//             "photographer": "60f5b295c9554f57cd249d8b",
-//             "status": "Pending",
-//             "client_offer": 20,
-//             "__v": 0
-//         },
-//         {
-//             "tags": [
-//                 "cars"
-//             ],
-//             "_id": "6109d5a0e7077153a4637083",
-//             "title": "New Job",
-//             "description": "Job Desc",
-//             "client": "60f5b55130b4c2591034acc8",
-//             "photographer": "60f5b295c9554f57cd249d8b",
-//             "status": "Pending",
-//             "client_offer": 20,
-//             "photographer_ask": 40,
-//             "__v": 0
-//         },
-//         {
-//             "tags": [
-//                 "cars"
-//             ],
-//             "_id": "6109d6f7e7077153a4637087",
-//             "title": "New Job",
-//             "description": "Job Desc",
-//             "client": "60f5b55130b4c2591034acc8",
-//             "photographer": "60f5b295c9554f57cd249d8b",
-//             "status": "Pending",
-//             "client_offer": 20,
-//             "photographer_ask": 40,
-//             "__v": 0
-//         },
-//         {
-//             "tags": [
-//                 "cars",
-//                 "weddings"
-//             ],
-//             "_id": "6109ebe97cb39b641835a322",
-//             "title": "New JobBBBBBBBBBBB",
-//             "description": "Job Desc",
-//             "client": "60f5b55130b4c2591034acc8",
-//             "status": "Pending",
-//             "client_offer": 20,
-//             "photographer": "60f5b295c9554f57cd249d8b",
-//             "photographer_ask": 40,
-//             "__v": 0
-//         },
-//         {
-//             "tags": [
-//                 "cars",
-//                 "weddings"
-//             ],
-//             "_id": "6109f2e43696eb0a6c1dabf0",
-//             "title": "Demo job",
-//             "description": "Demo Job Desc",
-//             "client": "60f5b55130b4c2591034acc8",
-//             "status": "Pending",
-//             "client_offer": 20,
-//             "photographer": "60f5b295c9554f57cd249d8b",
-//             "photographer_ask": 40,
-//             "__v": 0
-//         }
-//     ]
-// }
-
-// import React, { Component } from 'react'
-
-// class PhotographerProfile extends Component {
-//    constructor(props) {
-//       super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
-//       this.state = { //state is by default an object
-//          students: [
-//             { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
-//             { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
-//             { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
-//             { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' }
-//          ]
-//       }
-//    }
-//    renderBookingsTable() {
-// 	return this.state.students.map((student, index) => {
-// 	   const { id, name, age, email } = student //destructuring
-// 	   return (
-// 		  <tr key={id}>
-// 			 <td>{id}</td>
-// 			 <td>{name}</td>
-// 			 <td>{age}</td>
-// 			 <td>{email}</td>
-// 		  </tr>
-// 	   )
-// 	})
-//  }
-
-//  render() {
-// 	return (
-// 	   <div>
-// 		  <h1 id='title'>React Dynamic Table</h1>
-// 		  <table id='students'>
-// 			 <tbody>
-// 				{this.renderBookingsTable()}
-// 			 </tbody>
-// 		  </table>
-// 	   </div>
-// 	)
-//  }
-// }
-// export default PhotographerProfile
