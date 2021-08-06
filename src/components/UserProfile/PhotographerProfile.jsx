@@ -155,8 +155,12 @@ function PhotographerProfile(props) {
 					</tbody>
 				</ReactBootStrap.Table>	
 			</div><br/>
-			<h2>Portfolio:</h2>
-			<button className="btn btn-primary" onClick={()=>uploadImages()}>Upload Images</button><br/><br/>
+			<h2>Portfolio:</h2><br/>
+			<div className="imageContainer">
+				<img src="./background_pic_1.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_2.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_3.jpg" className="imgPortfolio"/>
+			</div>
 			<h2>Reviews:</h2>
 			<div>
 				<br/>

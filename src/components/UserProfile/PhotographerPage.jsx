@@ -33,6 +33,7 @@ function PhotographerPage(props) {
 		tags: [" weddings ", " cars "],
 		type: "photographer"
 	}
+
 	// var dummy_photographer_user = props.user;
 
 	var dummy_photographer_bookings = [
@@ -97,6 +98,11 @@ function PhotographerPage(props) {
                 </div>
 			</div><br/><br/>
 			<h2>Portfolio:</h2><br/>
+			<div className="imageContainer">
+				<img src="./background_pic_1.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_2.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_3.jpg" className="imgPortfolio"/>
+			</div>
 			<h2>Reviews:</h2>
 			<div>
 				<br/>
