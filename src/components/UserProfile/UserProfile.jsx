@@ -15,24 +15,11 @@ function UserProfile(){
         // window.location.reload()
         var userDataFirebase = user.providerData[0]
         // console.log("userDataFirebase",userDataFirebase)
-        var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + userDataFirebase.email;
+        var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + user.email;
         const res = await fetch(url);
         const data = await res.json()
         // console.log ("data",data);
         return data
-
-        // console.log("getting data for current user ",user);
-        // var dummy_photographer_user = {
-        //     _id: "1",
-        //     name: "pouya",
-        //     email: "pouya@gmail.com",
-        //     phone: "1234567890",
-        //     fees: "100$",
-        //     tags: [" weddings ", " cars "],
-        //     type: "photographer"
-        // }
-        // // dummy_photographer_user = {}
-        // return dummy_photographer_user;
     };
 
 	useEffect(() => {
@@ -45,11 +32,12 @@ function UserProfile(){
     useEffect(() => {
         let currentUser = firebase.auth().currentUser;
         setUser(currentUser);
+        console.log("hkhjjh",currentUser)
         if (currentUser !== null){
             var data = getUserData(currentUser).then((data)=>{
-                console.log ("data",data);
+                // console.log ("data",data);
                 setUserData(data);
-                console.log("useEffect", user, userData);
+                // console.log("useEffect", user, userData);
             });
         }
     },[isSignedIn]);
@@ -61,7 +49,8 @@ function UserProfile(){
         return ( <PhotographerProfile user={userData.value[0]}/> );
     }
     else if (isSignedIn && userData.type === null){
-        return(<ExtraSignUpInfo/>);
+        // console.log(user.providerData[0])
+        return(<ExtraSignUpInfo user={ user.providerData[0] }/>);
     }
     else{
         return( <SignInScreen/> );

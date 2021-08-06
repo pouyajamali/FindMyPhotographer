@@ -24,22 +24,26 @@ export const useInput = initialValue => {
 
 function ExtraSignUpInfo(props) {
 
+	var firebase_user = props.user;
+	var email = firebase_user.email;
+	var name =  firebase_user.displayName;
+
 	//Dummy: To be deleted
-	var dummy_photographer_user = {
-		_id: "1",
-		name: "pouya",
-		email: "pouya@gmail.com",
-		phone: "1234567890",
-		fees: "100$",
-		tags: [" weddings ", " cars "],
-		type: "photographer"
-	}
+	// var dummy_photographer_user = {
+	// 	_id: "1",
+	// 	name: "pouya",
+	// 	email: "pouya@gmail.com",
+	// 	phone: "1234567890",
+	// 	fees: "100$",
+	// 	tags: [" weddings ", " cars "],
+	// 	type: "photographer"
+	// }
 	// var dummy_photographer_user = props.user; TODO
 
 	/////////////////////////////////////////////////////////////////////////////
 	
-	const { value:Name, bind:bindName, reset:resetName } = useInput('');
-	const { value:Email, bind:bindEmail, reset:resetEmail } = useInput('');
+	// const { value:Name, bind:bindName, reset:resetName } = useInput('');
+	// const { value:Email, bind:bindEmail, reset:resetEmail } = useInput('');
 	const { value:Phone, bind:bindPhone, reset:resetPhone} = useInput('');
 	const { value:Fee, bind:bindFee, reset:resetFee} = useInput('');
     const { value:Tags, bind:bindTags, reset:resetTags} = useInput('');
@@ -48,43 +52,51 @@ function ExtraSignUpInfo(props) {
 
 	const handleSubmit = (evt) => {
         var tmpTags = Tags.split(",")
-		dummy_photographer_user = {
-			_id: "1",
-			name: Name,
-			email: Email,
+		var new_user = {
+			// _id: "1",
+			name: name,
+			email: email,
 			phone: Phone,
 			fees: Fee,
 			tags: tmpTags,
 			type: dropdown
 		}
 		evt.preventDefault();
-		alert(dummy_photographer_user);
-		resetName();
-		resetEmail();
+		// alert(dummy_photographer_user);
+		// resetName();
+		// resetEmail();
 		resetPhone();
+		resetFee();
         resetTags();
-	}
 
+		var url = process.env.REACT_APP_BACKEND_URL;
+		console.log(new_user.type)
+		if (new_user.type === "photographer")
+			url += "/photographers/";
+		else if (new_user.type === "client")
+			url += "/clients/";
 
-	const renderBookingsTable = (booking, index) => {
-		return(
-			<tr key={index}>
-				<td>{booking._id}</td>
-				<td>{booking.title}</td>
-				<td>{booking.status}</td>
-				<td>{booking.fee}</td>
-			</tr>
-		)
-	}
-
-	const renderReviewsTable = (review, index) => {
-		return(
-			<tr key={index}>
-				<td>{review.author + ":"}</td>
-				<td>{review.description}</td>
-			</tr>
-
-		)
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(new_user),
+		})
+		.then(res => {
+			console.log('Response:', res);
+			if (res.ok){
+				alert(dropdown+" saved successfully");
+				window.location.reload();
+				// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
+			}
+			else{
+				alert(dropdown+" could not be saved");
+			}
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
 	}
 
 	return (
@@ -93,23 +105,23 @@ function ExtraSignUpInfo(props) {
             <p>Please enter your sign up information here.</p>
 			<div className="extraSignupInfo">
 				<form onSubmit={handleSubmit}>
-					<label>Name:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.name} {...bindName} /><br/><br/>
-					<label>Email Address:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.email} {...bindEmail} /><br/><br/>
+					<label>Name: {name}</label><br/>
+					{/* <input type="text" placeholder={dummy_photographer_user.name} {...bindName} /><br/><br/> */}
+					<label>Email Address: {email}</label><br/>
+					{/* <input type="text" placeholder={dummy_photographer_user.email} {...bindEmail} /><br/><br/> */}
 					<label>Phone:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.phone} {...bindPhone} /><br/><br/>
+					<input type="text" {...bindPhone} /><br/><br/>
 					<label>Fee:</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.fees} {...bindFee} /><br/><br/>
+					<input type="text" {...bindFee} disabled={dropdown === "client" ? true : false} /><br/><br/>
 					{/* <label>Current Tags: {dummy_photographer_user.tags}</label><br/>
 					<input type="text" placeholder={dummy_photographer_user.fees} {...bindFee} /><br/><br/> */}
                     <div>Please select the type of user account</div>
-                    <select value={dropdown} onChange={(e)=>{setDropdown(e.target.value)}}>
+                    <select  onChange={(e)=>{setDropdown(e.target.value)}} >
                         <option value="photographer">Photographer</option>
                         <option value="client">Client</option>
                     </select><br/><br/>
                     <label>Please type in the types of provided services seperated by coma.</label><br/>
-					<input type="text" placeholder={dummy_photographer_user.tags} {...bindTags} disabled={dropdown === "client" ? true : false}/>
+					<input type="text" {...bindTags} disabled={dropdown === "client" ? true : false}/>
                     <div>* This field is only required for the photographer account.</div><br/><br/>
 					<input type="submit" value="Submit" />
                     
@@ -120,17 +132,3 @@ function ExtraSignUpInfo(props) {
 }
 export default ExtraSignUpInfo
 
-
-// import {  useState, useEffect } from 'react';
-
-// function ExtraSignUpInfo (props){
-
-
-//     return(
-//         <div>
-//             extra
-//         </div>
-//     );
-// }
-
-// export default ExtraSignUpInfo;
