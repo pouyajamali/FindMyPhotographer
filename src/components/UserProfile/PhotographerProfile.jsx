@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import $ from 'jquery';
 import * as ReactBootStrap from "react-bootstrap";
 import firebase from "firebase";
+import "./UserStyles.css"
 
 export const useInput = initialValue => {
 	const [value, setValue] = useState(initialValue);
@@ -48,7 +49,7 @@ function PhotographerProfile(props) {
 		});
 	}, [])
 
-	//Dummy: To be deleted
+	// Dummy: To be deleted
 	// var dummy_photographer_user = {
 	// 	_id: "1",
 	// 	name: "pouya",
