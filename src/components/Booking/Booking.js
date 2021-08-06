@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { temp }  from '../Photographer/photographers'
+import { pid }  from '../Photographer/photographers'
 
 // class Bookings extends React.Component {
 // componentDidMount() {
@@ -27,7 +27,7 @@ export const Booking = (props) => {
     var [name, setName] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
-    var photographer = temp;
+    var photographer = pid;
     console.log(photographer)
 
     const titleUpdate = (event) => {
@@ -68,7 +68,7 @@ export const Booking = (props) => {
         })
             .then(() => {
                 // Once posted, the user will be notified 
-                alert('You have been added to the system!');
+                alert('You have been added to the system!', pid);
             }).catch((err) => {
                 console.log(err);
             })
