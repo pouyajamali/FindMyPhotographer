@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react';
+import ShowPhotographers from '../Photographer/photographers'
+import { temp }  from '../Photographer/photographers'
 
 // class Bookings extends React.Component {
 // componentDidMount() {
@@ -19,13 +21,16 @@ import React, { useState } from 'react';
 //     this.state = { username: '' };
 // }
 
+
+// console.log(temp);
 export const Booking = (props) => {
     var [title, setTitle] = useState()
     var [description, setDescription] = useState()
     var [name, setName] = useState()
     var [status, setStatus] = useState()
     var [offer, setOffer] = useState()
-    var photographer = props.PhotographerId;
+    var photographer = temp;
+    console.log(photographer)
 
     const titleUpdate = (event) => {
         setTitle(event.target.value)
@@ -47,6 +52,7 @@ export const Booking = (props) => {
 
 
     const handleSubmit = () => { // Once the form has been submitted, this function will post to the backend
+        alert(temp);
         const postURL = process.env.REACT_APP_BACKEND_URL + "/Bookings" //Our previously set up route in the backend
         fetch(postURL, {
             method: 'POST',

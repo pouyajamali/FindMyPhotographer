@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import Booking from "../Booking/Booking"
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-
-
+// var temp = 123;
+// export {temp};
+export let temp = 1234
 const ShowPhotographers = () => {
     const [Photographers, setPhotographers] = useState([])
 
@@ -20,11 +23,17 @@ const ShowPhotographers = () => {
         console.log(data);
         return data
     }
+    // var temp = null;
+    //export const sentId = temp
+
 function bookingNow(id){
     console.log("Clicked" + id);
     // <Booking PhotographerId={id} />
-    <Route name="/Booking" path="/:id" handler={CreateIdeaView} />
+    temp = id;
+    <Booking />
+    
 
+    // alert(temp);
 }
     return (
         <div>
@@ -51,7 +60,9 @@ function bookingNow(id){
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <button onClick={() => { bookingNow(Photographer._id)}}>Book This Photographer</button>
+                                <Link to='/book'>
+                                    <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button>
+                                </Link>
                             </td>
                             <td>
 
@@ -65,7 +76,6 @@ function bookingNow(id){
 
     )
 }
-
 
 
 export default ShowPhotographers
