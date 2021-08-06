@@ -107,7 +107,7 @@ function ClientProfile(props) {
 	return (
 		<div className="photographerProfile">
 			<h2>Client Panel: {clientInfo.name}</h2>
-			<div className="tableHolder">
+			<div className="formHolder">
 				<form onSubmit={handleSubmit}>
 					<label>Email Address: {clientInfo.email}</label><br/>
 					<label>Name:</label><br/>

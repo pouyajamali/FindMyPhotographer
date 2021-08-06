@@ -178,7 +178,7 @@ function PhotographerProfile(props) {
 	return (
 		<div className="photographerProfile">
 			<h2>Photographer Panel: {photographerInfo.name}</h2>
-			<div className="tableHolder">
+			<div className="formHolder">
 				<form onSubmit={handleSubmit}>
 					<p>Photographer Tags: {photographerInfo.tags ? photographerInfo.tags.toString() : ""}</p>
 					<label>Name:</label><br/>
@@ -214,6 +214,7 @@ function PhotographerProfile(props) {
 						{bookings.map(renderBookingsTable)}
 					</tbody>
 				</ReactBootStrap.Table>	
+				<p>* to counter an offer type in the new proposed fees and press enter.</p>
 			</div> : "No Bookings"}
 			<br/>
 			<h2>Portfolio:</h2><br/>

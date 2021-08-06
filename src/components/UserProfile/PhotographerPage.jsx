@@ -135,7 +135,7 @@ function PhotographerPage(props) {
 	return (
 		<div className="photographerProfile">
 			<h2>Photographer Panel:</h2>
-			<div className="tableHolder">
+			<div className="formHolder">
                 <div>
                     <h2>{photographer.name}</h2>
                     <h4>Email Address: {photographer.email}</h4>

@@ -28,18 +28,6 @@ function ExtraSignUpInfo(props) {
 	var email = firebase_user.email;
 	var name =  firebase_user.displayName;
 
-	//Dummy: To be deleted
-	// var dummy_photographer_user = {
-	// 	_id: "1",
-	// 	name: "pouya",
-	// 	email: "pouya@gmail.com",
-	// 	phone: "1234567890",
-	// 	fees: "100$",
-	// 	tags: [" weddings ", " cars "],
-	// 	type: "photographer"
-	// }
-	// var dummy_photographer_user = props.user; TODO
-
 	/////////////////////////////////////////////////////////////////////////////
 	
 	// const { value:Name, bind:bindName, reset:resetName } = useInput('');
