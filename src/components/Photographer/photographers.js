@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import Booking from "../Booking/Booking"
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
-
+export let pid = 1234
 const ShowPhotographers = () => {
     const [Photographers, setPhotographers] = useState([])
 
@@ -15,15 +17,23 @@ const ShowPhotographers = () => {
     }, [])
 
     const fetchPhotographers = async () => {
-        const res = await fetch('http://localhost:4000/photographers')
+        var url  = process.env.REACT_APP_BACKEND_URL + "/photographers";
+        const res = await fetch(url)
         const data = await res.json()
         console.log(data);
         return data
     }
-function bookingNow(id){
-    console.log("Clicked" + id);
-    <Booking PhotographerId={id} />
-}
+
+
+
+    function bookingNow(id){
+        console.log("Clicked" + id);
+        pid = id;
+        <Booking />
+        
+
+    }
+
     return (
         <div>
             <table className="table">
@@ -49,7 +59,9 @@ function bookingNow(id){
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <button onClick={() => { bookingNow(Photographer._id)}}>Book This Photographer</button>
+                                <Link to='/book'>
+                                    <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button>
+                                </Link>
                             </td>
                             <td>
 
@@ -63,7 +75,6 @@ function bookingNow(id){
 
     )
 }
-
 
 
 export default ShowPhotographers
