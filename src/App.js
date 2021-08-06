@@ -10,6 +10,7 @@ import bookingPhotographer from './components/Booking/Booking'
 import ExtraSignUpInfo from './components/UserProfile/ExtraSignUpInfo';
 import PhotographerProfile from './components/UserProfile/PhotographerProfile';
 import ClientProfile from './components/UserProfile/ClientProfile';
+import PhotographerPage from './components/UserProfile/PhotographerPage';
 
 function App() {
     
@@ -21,6 +22,7 @@ function App() {
                 <Route exact path="/" component={HomePage} />
                 <Route path="/about" component={AboutUs} />
                 <Route path="/userProfile" component={UserProfile} />
+                <Route path="/PhotographerPage" component={PhotographerPage} />
                 {/* <Route path="/login" component={SignInScreen} />
                 <Route path="/photographerProfile" component={PhotographerProfile} /> */}
                 <Route path="/clientProfile" component={ClientProfile} />
