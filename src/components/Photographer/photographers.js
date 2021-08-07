@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import * as ReactBootStrap from "react-bootstrap";
 
 // export let pid = 1234
 const ShowPhotographers = () => {
@@ -21,22 +22,9 @@ const ShowPhotographers = () => {
         return data
     }
 
-
-
-    // function bookingNow(id){
-    //     console.log("Clicked" + id);
-    //     pid = id;
-    //     // return(
-    //     //     </>
-    //             <Booking />
-    //         //     <PhotographerPage/>
-    //         // </>
-    //     // );
-    // }
-
     return (
         <div>
-            <table className="table table-striped" striped bordered hover>
+            <ReactBootStrap.Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -69,7 +57,6 @@ const ShowPhotographers = () => {
                                     // hash: "#the-hash",
                                     state: { photographer: Photographer }
                                 }}>
-                                    {/* <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button> */}
                                     Book This Photographer
                                 </Link>
                             </td>
@@ -86,7 +73,7 @@ const ShowPhotographers = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </ReactBootStrap.Table>
         </div>
 
     )

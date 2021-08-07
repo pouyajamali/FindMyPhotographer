@@ -1,7 +1,5 @@
-import axios from 'axios';
 import {useState, useEffect} from 'react';
-import $ from 'jquery';
-import * as ReactBootStrap from "react-bootstrap";
+import { Link } from 'react-router-dom';
 import firebase from "firebase";
 import "./UserStyles.css"
 
@@ -135,6 +133,15 @@ function PhotographerPage(props) {
 	return (
 		<div className="photographerProfile">
 			<h2>Photographer Panel:</h2>
+			<Link to={{
+				pathname: '/book',
+				// search: "?sort=name",
+				// hash: "#the-hash",
+				state: { photographer: photographer }
+			}}>
+				{/* <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button> */}
+				Book This Photographer
+			</Link>
 			<div className="formHolder">
                 <div>
                     <h2>{photographer.name}</h2>

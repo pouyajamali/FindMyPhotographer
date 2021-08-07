@@ -109,7 +109,7 @@ function ClientProfile(props) {
 			<h2>Client Panel: {clientInfo.name}</h2>
 			<div className="formHolder">
 				<form onSubmit={handleSubmit}>
-					<label>Email Address: {clientInfo.email}</label><br/>
+					<label>Email Address: {clientInfo.email}</label><br/><br />
 					<label>Name:</label><br/>
 					<input type="text" placeholder={clientInfo.name} {...bindName} /><br/><br/>
 					<label>Phone:</label><br/>

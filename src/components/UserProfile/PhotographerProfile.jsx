@@ -57,7 +57,7 @@ export const CounterOfferInput = (props) => {
 	  }
 	}
   
-	return <input placeholder={props.booking.counter_offer ? props.booking.counter_offer : ""} style={{width:"100%"}} type="text" onKeyDown={e=>handleKeyDown(e)} />
+	return <input disabled={props.booking.status !== "Pending"} placeholder={props.booking.counter_offer ? props.booking.counter_offer : ""} style={{width:"100%"}} type="text" onKeyDown={e=>handleKeyDown(e)} />
 }
 
 function PhotographerProfile(props) {
@@ -155,7 +155,7 @@ function PhotographerProfile(props) {
 				<td>{booking.status}</td>
 				<td>{booking.client_offer}</td>
 				<td><CounterOfferInput booking={booking}/></td>
-				<td>{booking.status === "Pending" ? <button className="btn btn-primary" onClick={(e)=>handleAcceptBooking(e,booking._id)}>Accept</button> : ""} </td>
+				<td>{booking.status === "Pending" ? <button className="btn btn-success" onClick={(e)=>handleAcceptBooking(e,booking._id)}>Accept</button> : ""} </td>
 				<td>{booking.status === "Pending" ? <button className="btn btn-danger" onClick={(e)=>handleRejectBooking(e,booking._id)}>Reject</button> : ""} </td>
 			</tr>
 		)
@@ -178,11 +178,11 @@ function PhotographerProfile(props) {
 			<h2>Photographer Panel: {photographerInfo.name}</h2>
 			<div className="formHolder">
 				<form onSubmit={handleSubmit}>
+					<label>Email Address: {photographerInfo.email}</label><br/>
 					<p>Photographer Tags: {photographerInfo.tags ? photographerInfo.tags.toString() : ""}</p>
 					<label>Name:</label><br/>
 					<input type="text" placeholder={photographerInfo.name} {...bindName} /><br/><br/>
-					{/* <label>Email Address:</label><br/>
-					<input type="text" placeholder={photographerInfo.email} {...bindEmail} /><br/><br/> */}
+					{/* <input type="text" placeholder={photographerInfo.email} {...bindEmail} /><br/><br/> */}
 					<label>Phone:</label><br/>
 					<input type="text" placeholder={photographerInfo.phone} {...bindPhone} /><br/><br/>
 					<label>Fee:</label><br/>
@@ -221,7 +221,7 @@ function PhotographerProfile(props) {
 			<h2>Reviews:</h2>
 			<div>
 				{reviews.length !== 0 ? 
-				<table className="reviewHolder">
+				<ReactBootStrap.Table striped bordered hover>
 					<thead>
 						<tr>
 							<th>Author</th>
@@ -232,7 +232,7 @@ function PhotographerProfile(props) {
 					<tbody>
 						{reviews.map(renderReviewsTable)}
 					</tbody>
-				</table> : "No Reviews"}
+				</ReactBootStrap.Table> : "No Reviews"}
 			</div>
 		</div>
 	);
