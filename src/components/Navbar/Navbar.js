@@ -1,8 +1,6 @@
 import {  useState, useEffect } from 'react';
 import "./Navbar.css"
 import firebase from "firebase";
-// import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
 
 
 function Navbar() {
