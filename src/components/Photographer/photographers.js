@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react'
-import Booking from "../Booking/Booking"
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import PhotographerPage from '../UserProfile/PhotographerPage';
-import Table from 'react-bootstrap/Table'
 
 // export let pid = 1234
 const ShowPhotographers = () => {
