@@ -36,13 +36,15 @@ const ShowPhotographers = () => {
 
     return (
         <div>
-            <table className="table" striped bordered hover>
+            <table className="table table-striped" striped bordered hover>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Phone</th>
                             <th>email</th>
                             <th>Fees/hr</th>
+                            <th>Book</th>
+                            <th>Profile</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -61,7 +63,7 @@ const ShowPhotographers = () => {
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <Link to={{
+                                <Link class="btn btn-primary" to={{
                                     pathname: '/book',
                                     // search: "?sort=name",
                                     // hash: "#the-hash",
@@ -72,7 +74,7 @@ const ShowPhotographers = () => {
                                 </Link>
                             </td>
                             <td>
-                                <Link to={{
+                                <Link class="btn btn-primary" to={{
                                     pathname: '/photographerPage',
                                     // search: "?sort=name",
                                     // hash: "#the-hash",

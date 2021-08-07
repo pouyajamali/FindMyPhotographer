@@ -111,7 +111,7 @@ function ExtraSignUpInfo(props) {
                     <label>Please type in the types of provided services seperated by coma.</label><br/>
 					<input type="text" {...bindTags} disabled={dropdown === "client" ? true : false}/>
                     <div>* This field is only required for the photographer account.</div><br/><br/>
-					<input type="submit" value="Submit" />
+					<input class="btn btn-primary" type="submit" value="Submit" />
                     
 				</form>
 			</div><br/><br/>

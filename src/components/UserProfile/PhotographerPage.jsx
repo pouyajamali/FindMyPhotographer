@@ -177,7 +177,7 @@ function PhotographerPage(props) {
 					<input min={0} max={5} type="number" placeholder="" {...bindStars} className="reviewAuthor"/>/5<br/><br/>
 					<label>Review Body:</label><br/>
 					<textarea placeholder="Your review goes here . . ." {...bindReview} className="reviewBox"></textarea>
-					<input type="submit" value="Submit" />
+					<input class="btn btn-primary" type="submit" value="Submit" />
 				</form>
 			</div>	
 			</> : ""}

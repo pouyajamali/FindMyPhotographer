@@ -155,8 +155,8 @@ function PhotographerProfile(props) {
 				<td>{booking.status}</td>
 				<td>{booking.client_offer}</td>
 				<td><CounterOfferInput booking={booking}/></td>
-				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleAcceptBooking(e,booking._id)}>Accept</button> : ""} </td>
-				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleRejectBooking(e,booking._id)}>Reject</button> : ""} </td>
+				<td>{booking.status === "Pending" ? <button className="btn btn-primary" onClick={(e)=>handleAcceptBooking(e,booking._id)}>Accept</button> : ""} </td>
+				<td>{booking.status === "Pending" ? <button className="btn btn-danger" onClick={(e)=>handleRejectBooking(e,booking._id)}>Reject</button> : ""} </td>
 			</tr>
 		)
 	}
@@ -189,7 +189,7 @@ function PhotographerProfile(props) {
 					<input type="text" placeholder={photographerInfo.fees} {...bindFee} /><br/><br/>
 					{/* <label>Current Tags: {photographerInfo.tags}</label><br/>
 					<input type="text" placeholder={photographerInfo.fees} {...bindFee} /><br/><br/> */}
-					<input type="submit" value="Update" />
+					<input class="btn btn-primary" type="submit" value="Update" />
 				</form>
 			</div><br/><br/>
 

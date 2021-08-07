@@ -99,7 +99,7 @@ function ClientProfile(props) {
 				<td>{booking.status}</td>
 				<td>{booking.client_offer}</td>
 				<td><CounterOfferInput booking={booking}/></td>
-				<td>{booking.status === "Pending" ? <button onClick={(e)=>handleCancelBooking(e,booking._id)}>Cancel</button> : ""} </td>
+				<td>{booking.status === "Pending" ? <button class="btn btn-primary" onClick={(e)=>handleCancelBooking(e,booking._id)}>Cancel</button> : ""} </td>
 			</tr>
 		)
 	}
@@ -116,7 +116,7 @@ function ClientProfile(props) {
 					<input type="text" placeholder={clientInfo.phone} {...bindPhone} /><br/><br/>
 					{/* <label>Current Tags: {clientInfo.tags}</label><br/>
 					<input type="text" placeholder={clientInfo.fees} {...bindFee} /><br/><br/> */}
-					<input type="submit" value="Update" />
+					<input class="btn btn-primary" type="submit" value="Update" />
 				</form>
 			</div><br/><br/>
 			<h2>Bookings Panel:</h2>
