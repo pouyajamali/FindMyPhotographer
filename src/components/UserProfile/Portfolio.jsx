@@ -63,8 +63,8 @@ function Portfolio(props){
 			}
 		}
 		evt.preventDefault();
-		// resetImgName();// uncomment
-		// resetImgDesc();// uncomment
+		resetImgName();
+		resetImgDesc();
 		// resetImgFile();
 
 		console.log("newImage",newImage)
@@ -111,7 +111,7 @@ function Portfolio(props){
 			console.error('Error:', error);
 		});
 
-		// setWillUploadImage(!willUploadImage);// uncomment
+		setWillUploadImage(!willUploadImage);
 	}
 
 
