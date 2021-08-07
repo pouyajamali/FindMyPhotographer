@@ -3,7 +3,6 @@ import firebase from "firebase";
 import SignInScreen from '../SignInUp/Firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import PhotographerPage from '../UserProfile/PhotographerPage';
-import '../Booking/Booking.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
