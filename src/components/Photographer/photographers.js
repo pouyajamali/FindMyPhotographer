@@ -3,6 +3,7 @@ import Booking from "../Booking/Booking"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import PhotographerPage from '../UserProfile/PhotographerPage';
+import Table from 'react-bootstrap/Table'
 
 // export let pid = 1234
 const ShowPhotographers = () => {
@@ -17,7 +18,7 @@ const ShowPhotographers = () => {
     }, [])
 
     const fetchPhotographers = async () => {
-        var url  = process.env.REACT_APP_BACKEND_URL + "/photographers";
+        var url = process.env.REACT_APP_BACKEND_URL + "/photographers";
         const res = await fetch(url)
         const data = await res.json()
         console.log(data);
@@ -39,14 +40,16 @@ const ShowPhotographers = () => {
 
     return (
         <div>
-            <table className="table">
+            <table className="table" striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>email</th>
+                            <th>Fees/hr</th>
+                        </tr>
+                    </thead>
                 <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>email</th>
-                        <th>Fees/hr</th>
-                    </tr>
                     {Photographers.map(Photographer => (
                         <tr key={Photographer._id} id={Photographer._id} >
                             <td >
