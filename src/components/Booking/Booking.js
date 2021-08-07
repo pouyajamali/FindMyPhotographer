@@ -3,6 +3,10 @@ import firebase from "firebase";
 import SignInScreen from '../SignInUp/Firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import PhotographerPage from '../UserProfile/PhotographerPage';
+import '../Booking/Booking.css';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 
 export const Booking = (props) => {
 
@@ -16,10 +20,10 @@ export const Booking = (props) => {
 
     useEffect(() => {
         const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
-			setIsSignedIn(!!user);
-		});
-		return ()=>unregisterAuthObserver();
-	}, []);
+            setIsSignedIn(!!user);
+        });
+        return () => unregisterAuthObserver();
+    }, []);
 
     const getUserData = async (user) => {//
         // window.location.reload()
@@ -35,15 +39,15 @@ export const Booking = (props) => {
     useEffect(() => {
         let currentUser = firebase.auth().currentUser;
         setfirebaseUser(currentUser);
-        console.log("hkhjjh",currentUser)
-        if (currentUser !== null){
-            var data = getUserData(currentUser).then((data)=>{
+        console.log("hkhjjh", currentUser)
+        if (currentUser !== null) {
+            var data = getUserData(currentUser).then((data) => {
                 // console.log ("data",data);
                 setUserData(data);
                 // console.log("useEffect", user, userData);
             });
         }
-    },[isSignedIn]);
+    }, [isSignedIn]);
     /* isSignedIn, userData, photographer ready to be user for booking */
 
     var [title, setTitle] = useState()
@@ -71,13 +75,13 @@ export const Booking = (props) => {
 
     const handleSubmit = () => { // Once the form has been submitted, this function will post to the backend
         var new_booking = {
-                title,
-                description,
-                client: userData.value[0]._id,
-                photographer: photographer.photographer._id,
-                status:"Pending",
-                client_offer: offer
-            }
+            title,
+            description,
+            client: userData.value[0]._id,
+            photographer: photographer.photographer._id,
+            status: "Pending",
+            client_offer: offer
+        }
 
         const postURL = process.env.REACT_APP_BACKEND_URL + "/Bookings" //Our previously set up route in the backend
         fetch(postURL, {
@@ -88,48 +92,52 @@ export const Booking = (props) => {
             },
             body: JSON.stringify(new_booking)
         })
-        .then(() => {
-            // Once posted, the user will be notified 
-            alert('Booking has been requested to photographer. Wait for response from photographere...');
-            window.location.replace("/")
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then(() => {
+                // Once posted, the user will be notified 
+                alert('Booking has been requested to photographer. Wait for response from photographere...');
+                window.location.replace("/")
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
-    console.log(isSignedIn , photographer , userData)
-    
-    if (isSignedIn && photographer && userData){
+    console.log(isSignedIn, photographer, userData)
+
+    if (isSignedIn && photographer && userData) {
         return (
             <div>
                 <div>
                     <h1>Booking application </h1>
                     <p><b>{userData.value[0].name}</b> sending booking request to <b>{photographer.photographer.name}</b></p>
-                    <form>
-                        <label>Project name: </label>
-                        <input type='text' required onChange={titleUpdate} /> <br/>
-                        <label>Briefly describe your project :</label>
-                        <input type='text' required onChange={descriptionUpdate} /><br/>
-                        {/* <label>Status: </label>
-                        <input type='text' required onChange={statusUpdate} /><br/> */}
-                        <label>Offering price: </label>
-                        <input type='text' required onChange={offerUpdate} /><br/>
-                        {/* <label>Tag :</label>
-                        <input type='text' required onChange={offerUpdate} /><br/> */}
-                        <button type="submit" onClick={handleSubmit}>Submit</button>
-                    </form>
+                    <Container>
+                        <Form>
+                            <Form.Group className="mb-3" controlId="formName">
+                                <Form.Label>Project name: </Form.Label>
+                                <Form.Control type='text' required onChange={titleUpdate} /> <br />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formProject">
+                                <Form.Label>Briefly describe your project: </Form.Label>
+                                <Form.Control type='text' required onChange={descriptionUpdate} /><br />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formOffer">
+                                <Form.Label>Offering price: </Form.Label>
+                                <Form.Control type='text' required onChange={offerUpdate} /><br />
+                            </Form.Group>
+                            <Button type="submit" onClick={handleSubmit}>Submit</Button>
+                        </Form>
+                    </Container>
                 </div>
-                <PhotographerPage user={photographer}/>
+                <PhotographerPage user={photographer} />
             </div>
 
         );
     }
-    else if (isSignedIn && !photographer){
+    else if (isSignedIn && !photographer) {
         window.location.replace("/photographers");
     }
-    else{
-        return( <SignInScreen/> );
+    else {
+        return (<SignInScreen />);
     }
 
 }
