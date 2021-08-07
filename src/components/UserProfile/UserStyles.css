@@ -1,0 +1,68 @@
+.photographerProfile {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 1vw;
+  margin-bottom: 10vw;
+}
+
+.formHolder {
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.reviewHolder {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.reviewHolder tr td {
+  /* border: 1px solid black; */
+  border-bottom: 1px solid black;
+}
+
+.reviewHolder tr td:nth-child(1) {
+  width: 100px;
+}
+
+.extraSignupInfo {
+  margin-left: 10vw;
+  /* margin-right: 50vw; */
+}
+.reviewBox {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+.reviewAuthor {
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+.imageContainer {
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.imgPortfolio {
+  width: 500px;
+  height: 300px;
+}

@@ -1,0 +1,13 @@
+.aboutusGrid {
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.img {
+  width: 500px;
+  height: 500px;
+}

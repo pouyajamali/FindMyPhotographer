@@ -1,26 +1,31 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar"
-import Header from './components/topMenu'
-import HomeContent from './components/HomePageContent/HomePageContent'
-import ShowClientsAndPhotographers from './components/showClients/showClientsAndPhotographers';
-
-
-
-
-
-
+import HomePage from './components/HomePage/HomePage'
+import AboutUs from './components/AboutUs/AboutUs';
+import UserProfile from './components/UserProfile/UserProfile';
+import BookingPhotographer from './components/Photographer/photographers';
+import Booking from './components/Booking/Booking';
+import PhotographerPage from './components/UserProfile/PhotographerPage';
 
 function App() {
-    
+
     return (
-        <div className="App">
-            <Navbar />
-            <Header />
-            <HomeContent />
-            <ShowClientsAndPhotographers />
-        </div>
-  );
+        <Router>
+        <Switch>
+            <>
+                <Navbar />
+                <Route exact path="/" component={HomePage} />
+                <Route path="/about" component={AboutUs} />
+                <Route path="/userProfile" component={UserProfile} />
+                <Route path="/photographers" component={BookingPhotographer} />
+                <Route path="/book" component={Booking} />
+                <Route path="/photographerPage" component={PhotographerPage}/>
+            </>
+        </Switch>
+        </Router>
+    );
 }
 
 export default App;

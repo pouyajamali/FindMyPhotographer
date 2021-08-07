@@ -13,7 +13,7 @@ class HomeContent extends Component {
                 <div className="table">
                     <FlashOnIcon fontSize="large"/>
                     <h2>Fast</h2>
-                    <p>Quickest website out there to book you favorite photographers</p>
+                    <p>Quickest website to book your photographers</p>
                 </div>
                 <div className="table">
                     <SettingsIcon fontSize="large"/>
@@ -23,7 +23,7 @@ class HomeContent extends Component {
                 <div className="table">
                     <BeenhereIcon fontSize="large"/>
                     <h2>Safe</h2>
-                    <p>Varified photographers and safe payment optiones</p>
+                    <p>Verified photographers and safe payment options</p>
                 </div>
             </div>
         );
