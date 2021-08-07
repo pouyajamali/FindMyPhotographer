@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import Booking from "../Booking/Booking"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import PhotographerPage from '../UserProfile/PhotographerPage';
+import Table from 'react-bootstrap/Table'
 
-
-export let pid = 1234
+// export let pid = 1234
 const ShowPhotographers = () => {
     const [Photographers, setPhotographers] = useState([])
 
@@ -17,7 +18,7 @@ const ShowPhotographers = () => {
     }, [])
 
     const fetchPhotographers = async () => {
-        var url  = process.env.REACT_APP_BACKEND_URL + "/photographers";
+        var url = process.env.REACT_APP_BACKEND_URL + "/photographers";
         const res = await fetch(url)
         const data = await res.json()
         console.log(data);
@@ -26,24 +27,29 @@ const ShowPhotographers = () => {
 
 
 
-    function bookingNow(id){
-        console.log("Clicked" + id);
-        pid = id;
-        <Booking />
-        
-
-    }
+    // function bookingNow(id){
+    //     console.log("Clicked" + id);
+    //     pid = id;
+    //     // return(
+    //     //     </>
+    //             <Booking />
+    //         //     <PhotographerPage/>
+    //         // </>
+    //     // );
+    // }
 
     return (
         <div>
-            <table className="table">
+            <table className="table" striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>email</th>
+                            <th>Fees/hr</th>
+                        </tr>
+                    </thead>
                 <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>email</th>
-                        <th>Fees/hr</th>
-                    </tr>
                     {Photographers.map(Photographer => (
                         <tr key={Photographer._id} id={Photographer._id} >
                             <td >
@@ -59,13 +65,25 @@ const ShowPhotographers = () => {
                                 {Photographer.fees}
                             </td>
                             <td>
-                                <Link to='/book'>
-                                    <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button>
+                                <Link to={{
+                                    pathname: '/book',
+                                    // search: "?sort=name",
+                                    // hash: "#the-hash",
+                                    state: { photographer: Photographer }
+                                }}>
+                                    {/* <button onClick={() => { bookingNow(Photographer._id) }}>Book This Photographer</button> */}
+                                    Book This Photographer
                                 </Link>
                             </td>
                             <td>
-
-                                <a href="/" >Show Profile</a>
+                                <Link to={{
+                                    pathname: '/photographerPage',
+                                    // search: "?sort=name",
+                                    // hash: "#the-hash",
+                                    state: { photographer: Photographer }
+                                }}>
+                                    Show Profile
+                                </Link>
                             </td>
                         </tr>
                     ))}

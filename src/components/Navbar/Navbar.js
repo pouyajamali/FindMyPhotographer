@@ -17,11 +17,6 @@ function Navbar() {
             cName: 'nav-links'
         },
         {
-            title: 'Events',
-            url: '#',
-            cName: 'nav-links'
-        },
-        {
             title: 'About Us',
             url: '/about',
             cName: 'nav-links'

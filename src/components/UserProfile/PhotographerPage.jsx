@@ -19,109 +19,168 @@ export const useInput = initialValue => {
 		}
 	  }
 	};
-  };
+};
 
 function PhotographerPage(props) {
 
-	// Dummy: To be deleted
-	var dummy_photographer_user = {
-		_id: "1",
-		name: "Pooya Jamali",
-		email: "pouya@gmail.com",
-		phone: "1234567890",
-		fees: "100$",
-		tags: [" weddings ", " cars "],
-		type: "photographer"
-	}
-	// var dummy_photographer_user = props.user;
+	let photographer = props.location? props.location.state : props.user;
+	photographer = photographer.photographer;
 
-	var dummy_photographer_bookings = [
-										{tags: [" cars "], _id: "1", title: "Honda Civic", description: "Honda Civic pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
-										{tags: [" cars "], _id: "2", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"},
-										{tags: [" cars "], _id: "3", title: "Mazda 3", description: "Mazda 3 pics for sale", client: "1234567890", photographer: "$100", status: "pending", fee: "$100"}
-									]
-
-	var dummy_review = [
-						{author: "john", description:"I had an amazing experience with this great photographer"},
-						{author: "alex", description:"This guy is super talented!"}
-	]
-	/////////////////////////////////////////////////////////////////////////////
+	console.log("PhotographerPage stateData", photographer)
 	
-	const { value:Name, bind:bindName, reset:resetName } = useInput('');
+	var [isSignedIn, setIsSignedIn] = useState(false);
+	var [user, setUser] = useState(0);
+    var [userData, setUserData] = useState(0);
+
+	var [reviews, setReviews] = useState([]);
+	// var [portfolio, setPortfolio] = useState(0);
+
+	const getPhotographerReviews = async (id) => {//
+        var url = process.env.REACT_APP_BACKEND_URL + '/profiles/photographer/' + id;
+        const res = await fetch(url);
+        const data = await res.json()
+        console.log ("data",data);
+        return data
+    };
+	
+	const getUserData = async (user) => {
+        var url = process.env.REACT_APP_BACKEND_URL + '/getInfoFromEmail/' + user.email;
+        const res = await fetch(url);
+        const data = await res.json()
+        return data
+    };
+
+	useEffect(()=>{
+		var data = getPhotographerReviews(photographer._id).then((data)=>{
+			console.log ("data",data);
+			setReviews(data.reviewInfo);
+		});
+		const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+			setIsSignedIn(!!user);
+		});
+		return ()=>unregisterAuthObserver();
+	}, [])
+
+	useEffect(() => {
+        let currentUser = firebase.auth().currentUser;
+        setUser(currentUser);
+        if (currentUser !== null){
+			console.log("called getUserData")
+            var data = getUserData(currentUser).then((data)=>{
+				console.log ("called getUserData",data);
+                setUserData(data);
+            });
+        }
+    },[isSignedIn]);
+
+	var [isSameID, setIsSameID] = useState(0);
+	useEffect(() => {
+		if (userData.value)
+			setIsSameID(userData.value[0]._id === photographer._id);
+	},[userData]);
+	
+	const { value:Stars, bind:bindStars, reset:resetStars } = useInput('');
 	const { value:Review, bind:bindReview, reset:resetReview } = useInput('');
 
 
 	const handleSubmit = (evt) => {
-		var user_review = {
-			_id: "1",
+		var review = {
+			client: userData.value[0]._id,
+			clientName: userData.value[0].name,
+			photographer: photographer._id,
+			stars: Stars,
 			review: Review,
 		}
 		evt.preventDefault();
-		resetName();
+		resetStars();
 		resetReview();
-		return user_review;
-	}
+		// return review;
 
-
-	const renderBookingsTable = (booking, index) => {
-		return(
-			<tr key={index}>
-				<td>{booking._id}</td>
-				<td>{booking.title}</td>
-				<td>{booking.status}</td>
-				<td>{booking.fee}</td>
-			</tr>
-		)
+		var url = process.env.REACT_APP_BACKEND_URL + "/reviews/";
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(review),
+		})
+		.then(res => {
+			console.log('Response:', res);
+			if (res.ok){
+				alert("Review saved successfully");
+				window.location.reload();
+				// setPhotographerInfo(updated_photographer);	// if i dont want to reload whole page
+			}
+			else{
+				alert("Review could not be saved");
+			}
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
 	}
 
 	const renderReviewsTable = (review, index) => {
 		return(
 			<tr key={index}>
-				<td>{review.author + ":"}</td>
-				<td>{review.description}</td>
+				<td>{review.clientName}</td>
+				<td>{review.stars}</td>
+				<td>{review.review}</td>
 			</tr>
-
 		)
 	}
+
+	// console.log(userData.value[0]._id, photographer._id)
 
 	return (
 		<div className="photographerProfile">
 			<h2>Photographer Panel:</h2>
-			<div className="tableHolder">
+			<div className="formHolder">
                 <div>
-                    <h2>{dummy_photographer_user.name}</h2>
-                    <h4>Email Address: {dummy_photographer_user.email}</h4>
-                    <h4>Phone: {dummy_photographer_user.phone}</h4>
-                    <h4>Booking Fee: {dummy_photographer_user.fees}</h4>
-                    <h4>Tags: {dummy_photographer_user.tags}</h4>
+                    <h2>{photographer.name}</h2>
+                    <h4>Email Address: {photographer.email}</h4>
+                    <h4>Phone: {photographer.phone}</h4>
+                    <h4>Booking Fee: {photographer.fees}</h4>
+                    <h4>Tags: {photographer.tags}</h4>
                 </div>
 			</div><br/><br/>
 			<h2>Portfolio:</h2><br/>
+			<div className="imageContainer">
+				<img src="./background_pic_1.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_2.jpg" className="imgPortfolio"/>
+				<img src="./background_pic_3.jpg" className="imgPortfolio"/>
+			</div>
 			<h2>Reviews:</h2>
 			<div>
 				<br/>
+				{reviews.length !== 0 ? 
 				<table className="reviewHolder">
 					<thead>
 						<tr>
 							<th>Author</th>
+							<th>Stars</th>
 							<th>Description</th>
 						</tr>
 					</thead>
 					<tbody>
-						{dummy_review.map(renderReviewsTable)}
+						{reviews.map(renderReviewsTable)}
 					</tbody>
-				</table><br/><br/>
-                <div className="reviewHolder">
-                    <form onSubmit={handleSubmit}>
-						<h6>Add your reviews below.</h6>
-                    	<label>Author:</label><br/>
-                        <input type="text" placeholder="You name" {...bindName} className="reviewAuthor"/><br/><br/>
-                        <label>Review Body:</label><br/>
-                        <textarea placeholder="Your review goes here . . ." {...bindReview} className="reviewBox"></textarea>
-						<input type="submit" value="Submit" />
-                    </form>
-                </div>
+				</table> : "No Reviews"}
 			</div>
+			<br/><br/>
+			{isSignedIn && !isSameID?
+			<>	
+			<h2>Add your reviews below.</h2>
+			<div className="reviewHolder">
+				<form onSubmit={handleSubmit}>
+					<label>Stars:</label><br/>
+					<input min={0} max={5} type="number" placeholder="" {...bindStars} className="reviewAuthor"/>/5<br/><br/>
+					<label>Review Body:</label><br/>
+					<textarea placeholder="Your review goes here . . ." {...bindReview} className="reviewBox"></textarea>
+					<input type="submit" value="Submit" />
+				</form>
+			</div>	
+			</> : ""}
 		</div>
 	);
 }

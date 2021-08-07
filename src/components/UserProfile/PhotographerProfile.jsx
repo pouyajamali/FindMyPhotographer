@@ -27,6 +27,30 @@ export const updateBooking = (booking_id, updated_booking) => {
 	});
 };
 
+export const updateBooking = (booking_id, updated_booking) => {
+	var url = process.env.REACT_APP_BACKEND_URL + "/bookings/" + booking_id;
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(updated_booking),
+	})
+	.then(res => {
+		console.log('Response:', res);
+		if (res.ok){
+			alert("Booking updated successfully");
+			window.location.reload();
+		}
+		else{
+			alert("Booking could not be updated");
+		}
+	})
+	.catch((error) => {
+		console.error('Error:', error);
+	});
+};
+
 export const useInput = initialValue => {
 	const [value, setValue] = useState(initialValue);
 
